@@ -1,0 +1,58 @@
+<xmlNav>
+	<navName>DRAWING_CONTROLS</navName>	
+	<bounds>	
+		<x>0</x>
+		<y>0</y>
+		<w>1024</w>
+		<h>100</h>
+	</bounds>
+
+	<elements>
+    
+		<defaultX>20</defaultX>
+		<defaultY>10</defaultY>
+		<defaultWidth>160</defaultWidth>
+		<defaultHeight>90</defaultHeight>
+        <defaultTrigger>0.85</defaultTrigger>
+
+		<button>	
+			<spacing>120</spacing>
+			<state>
+				<title>PAUSED</title>
+                <img>paused.png</img>
+			</state>
+			<state>
+				<title>DRAWING</title>
+                <img>pencil.png</img>
+			</state>
+		</button>
+
+		<button>	
+            <repeatTime>0.4</repeatTime>
+			<spacing>70</spacing>
+			<state>
+				<title>UNDO_DRAW</title>
+				<text>UNDO</text>
+                <img>undo.png</img>
+			</state>
+		</button>
+
+		<button>	
+			<spacing>140</spacing>
+			<state>
+				<title>NEW_SHAPE</title>
+				<text>NEW SHAPE</text>
+                <img>new.png</img>
+			</state>
+		</button>
+
+		<button>	
+			<spacing>120</spacing>
+			<state>
+				<title>SEND_TO_ROBOT</title>
+                <img>toRobot.png</img>
+			</state>
+		</button>
+
+	</elements>
+</xmlNav>
