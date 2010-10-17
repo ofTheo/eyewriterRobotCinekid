@@ -25,7 +25,9 @@ void eyeCursor::update(float x, float y, float smoothSpeed){
 
 void eyeCursor::draw(){
 	ofPushStyle();
-		ofNoFill();
-		ofCircle(currentPoint.x, currentPoint.y, 8);
+		ofEnableAlphaBlending();
+		ofSetColor(80, 80, 80, 160);
+		ofFill();
+		ofCircle(currentPoint.x, currentPoint.y, 13);
 	ofPopStyle();
 }

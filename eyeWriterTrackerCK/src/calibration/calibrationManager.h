@@ -35,6 +35,8 @@ class calibrationManager {
 		float		xp, yp;
 		int			pos;
 		float		inputEnergy;
+		
+		vector	<int>	randomOrder;
 
 		void		start();
 		void		stop();

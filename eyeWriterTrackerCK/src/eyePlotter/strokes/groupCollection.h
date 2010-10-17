@@ -52,6 +52,11 @@ class groupCollection{
 		return groups;
 	}
 
+	//--------------------------------
+	vector <strokeGroup> getVectorCopy(){
+		return groups;
+	}
+
 
 	//STROKE GROUP SPECIFIC
 

@@ -20,10 +20,15 @@ void eyewriterDrawingApp::update(float x, float y, float smoothAmnt){
 	if( y < bounds.y ) y = bounds.y;
 	if( x > bounds.x + bounds.width )	x = bounds.x + bounds.width;
 	if( y > bounds.y + bounds.height )	y = bounds.y + bounds.height;
-	
-	cursor.update(x, y, smoothAmnt);
+		
+	if( drawScene.bOffsetCheck ){
+		cursor.update(x, y, smoothAmnt);
+	}else{
+		cursor.update(x+drawScene.offset.x, y+drawScene.offset.y, smoothAmnt);	
+	}
+
 	drawScene.update(cursor.currentPoint.x, cursor.currentPoint.y);	
-	
+
 }
 
 void eyewriterDrawingApp::draw(){

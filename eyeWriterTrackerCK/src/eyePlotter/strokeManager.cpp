@@ -8,12 +8,16 @@
  */
 
 #include "strokeManager.h"
+#include "strokeUtils.h"
 
+//-------------------------------------------------------------------
 void strokeManager::clear(){
 	group.clear();
+	tmpCpy.clear();
 	sendEvent("clear");				
 }
 
+//-------------------------------------------------------------------
 void strokeManager::addPoint(float x, float y){
 
 	if( group.size() == 0 ){
@@ -25,6 +29,7 @@ void strokeManager::addPoint(float x, float y){
 	sendEvent("addPoint");				
 }
 
+//-------------------------------------------------------------------
 void strokeManager::undoLastPoint(){
 	if( group.size() > 0 ){
 		if( group.back().hasPoints() ){
@@ -35,6 +40,7 @@ void strokeManager::undoLastPoint(){
 	}
 }
 
+//-------------------------------------------------------------------
 void strokeManager::newStroke(){
 	if( group.back().strokes.size() && group.back().getLastStrokeNumPoints() <= 1 ){
 		group.back().strokes.back().pts.clear();
@@ -46,20 +52,29 @@ void strokeManager::newStroke(){
 	sendEvent("newStroke");	
 }
 
+//-------------------------------------------------------------------
 void strokeManager::sendEvent(string eventType){
 	strokeEvent tmpEvent;
 	tmpEvent.strokeAction = eventType;
 	ofNotifyEvent(actionEvent, tmpEvent, this);
 }
 
+//-------------------------------------------------------------------
+void strokeManager::autoScaleGroups(ofRectangle targetRect){
+	strokeUtils::autoPlaceAndScaleByWidth(group.getVector(), targetRect, false);
+}
+
+//-------------------------------------------------------------------
 void strokeManager::newShape(){
 	if( group.back().getTotalNumPoints() > 1 ){
+
+		tmpCpy = group.getVectorCopy();
 
 		group.addGroup();
 		group.back().begin();
 		group.back().style = groupStyle(group.size());
 		
-		sendEvent("madeNewShape");
+		sendEvent("madeNewShape");			
 
 	}else{
 		group.back().clear();
@@ -69,6 +84,7 @@ void strokeManager::newShape(){
 		
 }
 
+//-------------------------------------------------------------------
 void strokeManager::drawAllShapes(){
 	
 	if( group.size() ){
@@ -78,12 +94,14 @@ void strokeManager::drawAllShapes(){
 	}
 }
 
+//-------------------------------------------------------------------
 void strokeManager::drawCurrentShape(){
 	if( group.size() ){
 		group.back().draw();
 	}
 }
 
+//-------------------------------------------------------------------
 void strokeManager::drawGuideLine(float tx, float ty){
 
 	if( group.size() && group.back().hasPoints() ){
@@ -97,7 +115,77 @@ void strokeManager::drawGuideLine(float tx, float ty){
 			glDisable(GL_LINE_STIPPLE);
 		}
 	}
+}
 
+//-------------------------------------------------------------------
+void strokeManager::drawAllShapesUpToPoint(int thePoint){
+	ofPushStyle();
+	
+		int theCount = 0;
+		if( group.size() ){
+			for(int i = 0; i < group.size(); i++){
+				for(int j = 0; j < group[i].strokes.size(); j++){
+					
+					int nPts = group[i].strokes[j].pts.size();
+					
+					ofNoFill();
+					ofBeginShape();
+					for(int k = 0; k < nPts; k++){
+						ofVertex(group[i].strokes[j].pts[k].x, group[i].strokes[j].pts[k].y);
+						theCount++;
+						if( theCount >= thePoint )break;
+					}
+					ofEndShape();
+					if( theCount >= thePoint )break;				
+				}
+				if( theCount >= thePoint )break;
+			}
+		}
+	
+	ofPopStyle();
+	
+}
+
+//-------------------------------------------------------------------
+ofPoint strokeManager::getPoint(int thePoint, bool & bFirstStroke, bool & bLastStroke){
+	
+	int theCount = 0;
+	if( group.size() ){
+		for(int i = 0; i < group.size(); i++){
+			for(int j = 0; j < group[i].strokes.size(); j++){					
+				int nPts = group[i].strokes[j].pts.size();
+				for(int k = 0; k < nPts; k++){
+					theCount++;
+					if( theCount >= thePoint ){
+						if( k == 0 ){
+							bFirstStroke = true;
+						}else{
+							bFirstStroke = false;						
+						}
+						if( k == nPts-1 ){
+							bLastStroke = true;
+						}else{
+							bLastStroke = false;						
+						}						
+						return ofPoint(group[i].strokes[j].pts[k].x, group[i].strokes[j].pts[k].y);
+					}
+				}
+			}
+		}
+	}
+	
+	return ofPoint();
+}
+
+//-------------------------------------------------------------------
+void strokeManager::drawAllShapesInRect(ofRectangle rect){
+
+	strokeUtils::autoPlaceAndScaleByWidth(tmpCpy, rect, false);
+	if( tmpCpy.size() ){
+		for(int i = 0; i < tmpCpy.size(); i++){
+			tmpCpy[i].draw();
+		}
+	}	
 }
 
 

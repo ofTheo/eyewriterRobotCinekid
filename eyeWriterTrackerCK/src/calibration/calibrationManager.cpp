@@ -32,6 +32,12 @@ void calibrationManager::setup(){
 
 	setupControlPanel();
 	fitter.setup(nDivisionsWidth, nDivisionsHeight);
+	
+	int total = nDivisionsWidth * nDivisionsHeight;
+	randomOrder.assign(total, int());
+	for(int k = 0; k < randomOrder.size(); k++){
+		randomOrder[k] = k;
+	}
 
 	smoothing = 1.0f;
 	menuEnergy = 1;
@@ -46,6 +52,8 @@ void calibrationManager::start(){
 	bAutomatic = true;
 	bAmInAutodrive = true;
 	startTime = ofGetElapsedTimef();
+	
+	random_shuffle(randomOrder.begin(), randomOrder.end());
 	
 	fitter.startCalibration();
 }
@@ -126,11 +134,13 @@ void calibrationManager::update(){
 			pos = pt;
 		}
 	}
+						//TODO: this works but pointFitter is expecting the points in order. 
+	int randPos = pos ;	//randomOrder[pos];
 
 	inputEnergy *= 0.98f;
 
-	int xx = (pos % nDivisionsWidth);
-	int yy = (pos / nDivisionsWidth);
+	int xx = (randPos % nDivisionsWidth);
+	int yy = (randPos / nDivisionsWidth);
 
 	bool bEven = false;
 	if (yy % 2 == 0)  bEven = true;
@@ -140,7 +150,7 @@ void calibrationManager::update(){
 
 	yp = calibrationRectangle.y + calibrationRectangle.height - ((float)calibrationRectangle.height / (float)(nDivisionsHeight-1)) * yy;
 	
-	fitter.update(pt, xp, yp);		// raw data is comming from testApp directly to fitter.
+	fitter.update(randPos, xp, yp);		// raw data is comming from testApp directly to fitter.
 }
 
 //--------------------------------------------------------------

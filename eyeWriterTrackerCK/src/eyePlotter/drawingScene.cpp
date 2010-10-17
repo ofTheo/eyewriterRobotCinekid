@@ -17,10 +17,13 @@ void drawingScene::setup(float x, float y, float w, float h){
 	bgColor.b = 50;
 	bgColor.a = 255;
 	
-	bPaused = true;
+	offset  = 0.0;
+	bOffsetCheck	= false;
+
+	bPaused			= true;
 	
 	bounds	= ofRectangle(x, y, w, h);
-	timer.setWaitTime(0.5);
+	timer.setWaitTime(0.7);
 	
 	drawingNav.setup("nav/drawingBar.xml", "nav/icons/");
 	ofAddListener(drawingNav.navEvent,this,&drawingScene::eventsIn);
@@ -38,6 +41,8 @@ void drawingScene::setup(float x, float y, float w, float h){
 	
 	lastPoint.set(0,0,0);
 	bSentToRobot		= false;
+	bSendingToRobot		= false;
+	
 	int port            = xml.getValue("PORT", 1600);
 	
 	int mode			= xml.getValue("DRAW_MODE", 0);
@@ -59,6 +64,17 @@ void drawingScene::setup(float x, float y, float w, float h){
     abb.setEndChar(endChar);	
 	
 	// --
+}
+
+//------------------------------------------------------------------------
+void drawingScene::checkOffset(){
+	offset = 0;
+	numCheck = 0;
+	bOffsetCheck = true;
+	offsetCheckTill = ofGetElapsedTimef() + 1.5;
+	
+	buttonNav * b = drawingNav.getButton("PAUSED");
+	b->triggerState("PAUSED");	
 }
 
 //------------------------------------------------------------------------
@@ -106,21 +122,34 @@ void drawingScene::eventsIn(buttonNavEvent & event){
 	}			
 	
 	if( e == "SEND_TO_ROBOT" ){
+		if( abbMode == ABB_DELAYED ){
+			manager.autoScaleGroups(ofRectangle(80, 160, ofGetWidth()-160, ofGetHeight()-200) );
+		}
+	
 		buttonNav * b = drawingNav.getButton("PAUSED");
 		b->triggerState("PAUSED");
 		
 		manager.newShape();		
 		
 		if( abbMode == ABB_DELAYED ){
+			b->disable();
+			bSendingToRobot = true;
+			timeStarted = ofGetElapsedTimef();
+			currentPoint = 0;
+			targetPoint  = 0;
+			
 			for(int k = 0; k < manager.group.size(); k++){
-				sendLetterToRobot(manager.group[k], betweenPointMillis);
+				targetPoint += manager.group[k].getTotalNumPoints();
+				//sendLetterToRobot(manager.group[k], betweenPointMillis);
 			}
-		}
+		}else{
 		
-		if( abb.bDrawingStarted ){
-			abb.endDrawing();
-			bSentToRobot = true;
-		}		
+			if( abb.bDrawingStarted ){
+				abb.endDrawing();
+				bSentToRobot = true;
+			}	
+		}
+			
 	}
 }
 
@@ -187,6 +216,55 @@ void drawingScene::update(float mx, float my){
 	abb.update();
 
 	current.set(mx, my);
+
+	if( bSendingToRobot ){
+		
+		if( ofGetElapsedTimef() - timeStarted > currentPoint ){
+		
+			bool bFirst = false;
+			bool bLast  = false;
+			ofPoint pt = manager.getPoint(currentPoint, bFirst, bLast);
+			
+			if( currentPoint == 0 ){
+				abb.startDrawingAtPoint(pt.x/bounds.width, pt.y/bounds.height);
+			}else{
+				abb.moveDown(pt.x/bounds.width, pt.y/bounds.height);
+			}
+			
+			if( bLast ){
+				ofSleepMillis(betweenPointMillis);
+				abb.moveUp(pt.x/bounds.width, pt.y/bounds.height);			
+			}
+			
+			currentPoint++;
+		}
+				
+		if( currentPoint > targetPoint ){
+			currentPoint = targetPoint;
+
+			if( abb.bDrawingStarted ){
+				abb.endDrawing();
+			}	
+
+			bSentToRobot	= true;
+			bSendingToRobot = false;
+			
+			buttonNav * b = drawingNav.getButton("PAUSED");
+			b->enable();
+		}
+		
+	}
+
+	if( bOffsetCheck ){
+	
+		if( ofGetElapsedTimef() >= offsetCheckTill ){
+			offset /= numCheck;
+			bOffsetCheck = false;
+		}else if( ofGetElapsedTimef() >= offsetCheckTill - 0.7){
+			offset += ofPoint(ofGetWidth()/2, ofGetHeight()/2) - current;
+			numCheck++;
+		}
+	}
 	
 	timer.update(current.x, current.y);
 	drawingNav.update(current.x, current.y, true);
@@ -218,55 +296,88 @@ void drawingScene::draw(){
 	ofFill();
 	ofSetColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
 	ofRect(bounds.x, bounds.y, bounds.width, bounds.height);
-	
-	ofPushStyle();
-		ofSetLineWidth(1.0);
-		ofEnableAlphaBlending();
-		ofSetColor(0, 0, 0, 80);
 
-		for(int x = 0; x < bounds.width; x+= 20){
-			if( x % 100 == 0 ){
-				ofSetLineWidth(2);
-			}else{
-				ofSetLineWidth(1);			
+	if( ! bOffsetCheck ){
+		
+		ofPushStyle();
+			ofSetLineWidth(1.0);
+			ofEnableAlphaBlending();
+			ofSetColor(0, 0, 0, 80);
+
+			for(int x = 0; x < bounds.width; x+= 20){
+				if( x % 100 == 0 ){
+					ofSetLineWidth(2);
+				}else{
+					ofSetLineWidth(1);			
+				}
+				ofLine(x, 0, x, bounds.height);
 			}
-			ofLine(x, 0, x, bounds.height);
-		}
 
-		for(int y = 0; y < bounds.height; y+= 20){
-			if( y % 100 == 0 ){
-				ofSetLineWidth(2);
-			}else{
-				ofSetLineWidth(1);			
-			}		
-			ofLine(0, y, bounds.width, y);
+			for(int y = 0; y < bounds.height; y+= 20){
+				if( y % 100 == 0 ){
+					ofSetLineWidth(2);
+				}else{
+					ofSetLineWidth(1);			
+				}		
+				ofLine(0, y, bounds.width, y);
+			}
+		ofPopStyle();
+		
+		
+		if( !bPaused && !bInsideNav){
+			ofSetColor(240, 240, 240);
+			manager.drawGuideLine(current.x, current.y);
+		}	
+
+		if( bSendingToRobot ){
+		
+			ofEnableAlphaBlending();
+			ofSetColor(240, 240, 240, 30);
+			manager.drawAllShapes();
+			
+			ofSetColor(240, 240, 240, 200);			
+			manager.drawAllShapesUpToPoint(currentPoint);
+		
+		}else if(  bSentToRobot ){
+		
+			ofEnableAlphaBlending();
+			ofSetColor(240, 240, 240, 200);
+			manager.drawAllShapes();
+					
+		}else{
+			ofPushStyle();
+				ofSetColor(240, 240, 240);
+				manager.drawCurrentShape();
+				
+				ofEnableAlphaBlending();
+				ofSetColor(240, 240, 240, 60);
+				ofRectangle bRect = ofRectangle(10, 130, ofGetWidth()-20, 140);
+				manager.drawAllShapesInRect(bRect);
+				ofNoFill();
+				//ofRect(bRect.x, bRect.y, bRect.width, bRect.height);
+			ofPopStyle();
 		}
-	ofPopStyle();
+		
+		ofPushStyle();
+
+			ofEnableAlphaBlending();
+			ofSetColor(200, 200, 200, 80);
+
+			ofDrawBitmapString("Mode: " + ( abbMode == ABB_IMMEDIATE ? string("immediate") : string("delayed") ) , 15, drawingNav.bounds.height+20);
+			ofDrawBitmapString("Server Status: " + abb.getStateString() , 15, drawingNav.bounds.height+35);
+
+			for(int k = 0; k < abb.msgHistory.size(); k++){
+				ofDrawBitmapString(abb.msgHistory[k], 15, drawingNav.bounds.height+50+18*k);
+			}
+
+		ofPopStyle();	
+
+	}else{
+		
+		ofSetColor(0, 0, 0, 255);
+		ofCircle(ofGetWidth()/2, ofGetHeight()/2, 2 + ofMap(ofGetElapsedTimef(), offsetCheckTill-1.5, offsetCheckTill-0.75, 40.0, 0.0, true));
 	
-	if( !bPaused && !bInsideNav){
-		ofSetColor(240, 240, 240);
-		manager.drawGuideLine(current.x, current.y);
 	}
-	
-	ofSetColor(150, 150, 150, 255);
-	manager.drawAllShapes();
-	
-	ofSetColor(240, 240, 240);
-	manager.drawCurrentShape();
-	
-	ofPushStyle();
-
-		ofEnableAlphaBlending();
-		ofSetColor(200, 200, 200, 80);
-
-		ofDrawBitmapString("Mode: " + ( abbMode == ABB_IMMEDIATE ? string("immediate") : string("delayed") ) , 15, drawingNav.bounds.height+20);
-		ofDrawBitmapString("Server Status: " + abb.getStateString() , 15, drawingNav.bounds.height+35);
-
-		for(int k = 0; k < abb.msgHistory.size(); k++){
-			ofDrawBitmapString(abb.msgHistory[k], 15, drawingNav.bounds.height+50+18*k);
-		}
-
-	ofPopStyle();	
 	
 	drawingNav.draw();
 }

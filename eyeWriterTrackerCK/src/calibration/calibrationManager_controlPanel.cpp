@@ -30,8 +30,11 @@ void calibrationManager::setupControlPanel(){
 	
 	panel.addToggle("mouse simulation", "B_MOUSE_SIMULATION", false);
 
-	panel.loadSettings("settings/calibrationSettings.xml");
+	panel.setWhichPanel("smoothing");
+	panel.addSlider("remove outliers", "REMOVE_OUTLIERS", 2, .1, 4, false);
+	panel.addSlider("smoothing amount", "AMOUNT_SMOOTHING", 0.993, 0.8, 1.0f, false);
 
+	panel.loadSettings("settings/calibrationSettings.xml");
 
 	panel.setWhichPanel("display calibration data");
 
@@ -45,10 +48,6 @@ void calibrationManager::setupControlPanel(){
 	panel.addSlider("RawDataOffsetX", "RAW_OFFSET_X", ofGetWidth()/2, 0, ofGetWidth()*2, true);
 	panel.addSlider("RawDataOffsetY", "RAW_OFFSET_Y", ofGetHeight()/2, 0, ofGetHeight()*2, true);
 
-
-	panel.setWhichPanel("smoothing");
-	panel.addSlider("remove outliers", "REMOVE_OUTLIERS", 2, .1, 4, false);
-	panel.addSlider("smoothing amount", "AMOUNT_SMOOTHING", 0.993, 0.8, 1.0f, false);
 }
 
 //--------------------------------------------------------------

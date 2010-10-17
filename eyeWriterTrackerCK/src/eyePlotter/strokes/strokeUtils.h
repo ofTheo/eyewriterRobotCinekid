@@ -115,22 +115,23 @@ class strokeUtils{
 			posX += bounding.width;
 		}
 		
-		
 		ofRectangle rect = strokeUtils::getBoundingRectFromGroups(strokeGroups, bCheckSelectionFlag);
-		
+				
 		if( rect.width == 0 || rect.height == 0 )return; 
+				
+		float scaleAmntX = fitRect.width / rect.width;
+		float scaleAmntY = fitRect.height / rect.height;
+
+		float scaleAmnt	 = scaleAmntX < scaleAmntY ? scaleAmntX : scaleAmntY;
 		
-		float scaleAmnt = fitRect.width / rect.width;
-		
-		strokeUtils::scaleGroups( strokeGroups, scaleAmnt, scaleAmnt );
+		strokeUtils::scaleGroups( strokeGroups, scaleAmnt, scaleAmnt, bCheckSelectionFlag );
 		rect = strokeUtils::getBoundingRectFromGroups(strokeGroups, bCheckSelectionFlag);
 
 		float yDiff		 = (fitRect.y - rect.y) + fabs(fitRect.height - rect.height)/2.0;
 		float xDiff		 =  fitRect.x - rect.x;
 	
 		for(int k = 0; k < strokeGroups.size(); k++){
-			if( !strokeGroups[k].selected() && bCheckSelectionFlag ) continue;
-			
+			if( !strokeGroups[k].selected() && bCheckSelectionFlag ) continue;			
 			strokeGroups[k].shift(xDiff, yDiff);
 		}
 	

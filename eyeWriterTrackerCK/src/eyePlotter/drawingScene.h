@@ -28,12 +28,22 @@ class drawingScene{
 		void update(float x, float y);
 		void draw();
 		
+		void checkOffset();
+		bool bOffsetCheck;
+		float offsetCheckTill;
+		int numCheck;		
+		ofPoint offset;
+		
 		ofColor bgColor;
 		ofRectangle bounds;
 		
 		strokeToABB abb;
 		serverMode abbMode;		
 		ofPoint lastPoint;
+		bool bSendingToRobot;
+		int currentPoint;
+		int targetPoint;
+		float timeStarted;
 		bool bSentToRobot;
 		int betweenPointMillis;		
 		
