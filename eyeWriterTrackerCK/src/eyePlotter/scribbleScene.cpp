@@ -1,17 +1,18 @@
 /*
- *  drawingScene.cpp
- *  CinekidRobot
+ *  scribbleScene.cpp
+ *  RemoteEyeTracker
  *
- *  Created by theo on 15/10/2010.
+ *  Created by theo on 18/10/2010.
  *  Copyright 2010 __MyCompanyName__. All rights reserved.
  *
  */
 
-#include "drawingScene.h"
+#include "scribbleScene.h"
+
 #include "ofxXmlSettings.h"
 
 //------------------------------------------------------------------------
-void drawingScene::setup(float x, float y, float w, float h){
+void scribbleScene::setup(float x, float y, float w, float h){
 	bgColor.r = 50;
 	bgColor.g = 50;
 	bgColor.b = 50;
@@ -26,8 +27,8 @@ void drawingScene::setup(float x, float y, float w, float h){
 	timer.setWaitTime(0.7);
 	
 	drawingNav.setup("nav/drawingBar.xml", "nav/icons/");
-	ofAddListener(drawingNav.navEvent,this,&drawingScene::eventsIn);
-	ofAddListener(manager.actionEvent,this,&drawingScene::strokeEvents);
+	ofAddListener(drawingNav.navEvent,this,&scribbleScene::eventsIn);
+	ofAddListener(manager.actionEvent,this,&scribbleScene::strokeEvents);
 
 	buttonNav * b = drawingNav.getButton("PAUSED");
 	b->triggerState("PAUSED");
@@ -42,7 +43,6 @@ void drawingScene::setup(float x, float y, float w, float h){
 	lastPoint.set(0,0,0);
 	bSentToRobot		= false;
 	bSendingToRobot		= false;
-	bInsideDrawingArea	= false;
 	
 	int port            = xml.getValue("PORT", 1600);
 	
@@ -68,7 +68,7 @@ void drawingScene::setup(float x, float y, float w, float h){
 }
 
 //------------------------------------------------------------------------
-void drawingScene::checkOffset(){
+void scribbleScene::checkOffset(){
 	offset = 0;
 	numCheck = 0;
 	bOffsetCheck = true;
@@ -79,7 +79,7 @@ void drawingScene::checkOffset(){
 }
 
 //------------------------------------------------------------------------
-void drawingScene::eventsIn(buttonNavEvent & event){
+void scribbleScene::eventsIn(buttonNavEvent & event){
 	printf("received event %s\n", event.eventName.c_str());
 	
 	string e = event.eventName;
@@ -155,7 +155,7 @@ void drawingScene::eventsIn(buttonNavEvent & event){
 }
 
 //------------------------------------------------------------------------
-void drawingScene::strokeEvents(strokeEvent & event){
+void scribbleScene::strokeEvents(strokeEvent & event){
 	
 	if( event.strokeAction == "madeNewShape"){
 		if( abbMode == ABB_SEMI ){
@@ -174,7 +174,7 @@ void drawingScene::strokeEvents(strokeEvent & event){
 
 //
 //-----------------------------------------------------------------
-void drawingScene::sendLetterToRobot(strokeGroup & g, int sleepTime){
+void scribbleScene::sendLetterToRobot(strokeGroup & g, int sleepTime){
 	//abb.clearHistory();
 
 	int numStrokes = g.strokes.size();
@@ -213,14 +213,14 @@ void drawingScene::sendLetterToRobot(strokeGroup & g, int sleepTime){
 }
 
 //------------------------------------------------------------------------
-void drawingScene::update(float mx, float my){
+void scribbleScene::update(float mx, float my){
 	abb.update();
 
 	current.set(mx, my);
 
 	if( bSendingToRobot ){
 		
-		if( ofGetElapsedTimef() - timeStarted > (float)currentPoint ){
+		if( ofGetElapsedTimef() - timeStarted > currentPoint ){
 		
 			bool bFirst = false;
 			bool bLast  = false;
@@ -268,17 +268,12 @@ void drawingScene::update(float mx, float my){
 		}
 	}
 	
-	printf("current.y is %f\n", current.y);
-	
 	timer.update(current.x, current.y);
 	drawingNav.update(current.x, current.y, true);
 	
-	bInsideNav = drawingNav.bounds.inside(current.x, current.y) && bounds.inside(current.x, current.y) && current.y < drawingNav.bounds.height && current.y > 0;
+	bInsideNav = drawingNav.bounds.inside(current.x, current.y);
 	
-	ofRectangle drawArea = ofRectangle(bounds.x, bounds.y + drawingNav.bounds.height, bounds.width, bounds.height-drawingNav.bounds.height);
-	bInsideDrawingArea = drawArea.inside(current.x, current.y);
-	
-	if( bInsideDrawingArea && !bPaused ){
+	if( !bInsideNav && !bPaused ){
 		if( timer.isPointStationary(9) ){
 			manager.addPoint(current.x, current.y);
 			
@@ -298,7 +293,7 @@ void drawingScene::update(float mx, float my){
 }
 
 //------------------------------------------------------------------------
-void drawingScene::draw(){
+void scribbleScene::draw(){
 	
 	ofFill();
 	ofSetColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
@@ -331,7 +326,7 @@ void drawingScene::draw(){
 		ofPopStyle();
 		
 		
-		if( !bPaused && bInsideDrawingArea){
+		if( !bPaused && !bInsideNav){
 			ofSetColor(240, 240, 240);
 			manager.drawGuideLine(current.x, current.y);
 		}	

@@ -1,5 +1,5 @@
 /*
- *  drawingScene.h
+ *  scribbleScene.h
  *  CinekidRobot
  *
  *  Created by theo on 15/10/2010.
@@ -13,9 +13,9 @@
 #include "eyeTimer.h"
 #include "strokeToABB.h"
 
-class drawingScene{
+class scribbleScene{
 	public:
-		drawingScene(){
+		scribbleScene(){
 		
 		}
 
@@ -46,8 +46,6 @@ class drawingScene{
 		float timeStarted;
 		bool bSentToRobot;
 		int betweenPointMillis;		
-		
-		bool bInsideDrawingArea;
 		
 		strokeManager manager;
 		eyeTimer timer;

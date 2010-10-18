@@ -45,6 +45,13 @@ class strokeToABB{
 			state			= ABB_SERVER_WAITING;
 			comMode			= ABB_TCP_STRING;
 		}
+		
+		~strokeToABB(){
+			for(int k = 0; k < tcpServer.getNumClients(); k++){
+				tcpServer.disconnectClient(k);
+			}
+			tcpServer.close();
+		}
 
 		void setEndChar(int _endChar){
             endChar = _endChar;
@@ -134,11 +141,13 @@ class strokeToABB{
 
 		void sendCommand(string cmmd, float x = 0, float y = 0, float z = 0){
 			
-			if( comMode == ABB_TCP_STRING ){
+			//we have to invert for the robot
 
-				int tcpX = x * xscale;
-				int tcpY = y * yscale;
-				int tcpZ = z * zscale;
+			int tcpX = yscale - y * yscale;
+			int tcpY = xscale - x * xscale;
+			int tcpZ = z * zscale;
+							
+			if( comMode == ABB_TCP_STRING ){
 
 				lastStr = "[";
 				lastStr += cmmd + ",";
@@ -157,11 +166,7 @@ class strokeToABB{
 				msgHistory.push_back(lastStr);
 				
 			}else{
-			
-				int tcpX = x * xscale;
-				int tcpY = y * yscale;
-				int tcpZ = z * zscale;
-				
+							
 				signed short tx = tcpX;
 				signed short ty = tcpY;
 				signed short tz = tcpZ;
