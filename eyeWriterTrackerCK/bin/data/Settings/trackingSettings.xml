@@ -200,10 +200,10 @@
     <val_0>300.000000</val_0>
 </MAX_BLOB_HEIGHT_PUPIL>
 <MIN_BLOB_GLINT>
-    <val_0>100.000000</val_0>
+    <val_0>66.666672</val_0>
 </MIN_BLOB_GLINT>
 <MAX_BLOB_GLINT>
-    <val_0>10000.000000</val_0>
+    <val_0>12111.110352</val_0>
 </MAX_BLOB_GLINT>
 <N_EROSIONS_EYEPOS>
     <val_0>0.000000</val_0>
