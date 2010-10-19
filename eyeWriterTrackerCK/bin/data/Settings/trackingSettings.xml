@@ -128,7 +128,7 @@
     <val_0>2.444444</val_0>
 </BLUR_EYEPOS>
 <THRESHOLD_EYEPOS>
-    <val_0>99.166672</val_0>
+    <val_0>36.833336</val_0>
 </THRESHOLD_EYEPOS>
 <MIN_BLOB_EYEPOS>
     <val_0>27.777779</val_0>
@@ -200,10 +200,10 @@
     <val_0>300.000000</val_0>
 </MAX_BLOB_HEIGHT_PUPIL>
 <MIN_BLOB_GLINT>
-    <val_0>66.666672</val_0>
+    <val_0>88.888893</val_0>
 </MIN_BLOB_GLINT>
 <MAX_BLOB_GLINT>
-    <val_0>12111.110352</val_0>
+    <val_0>9666.666016</val_0>
 </MAX_BLOB_GLINT>
 <N_EROSIONS_EYEPOS>
     <val_0>0.000000</val_0>
@@ -302,7 +302,7 @@
     <val_0>58.333336</val_0>
 </GLINT_MIN_DISTANCE>
 <GLINT_MAX_DISTANCE>
-    <val_0>151.111115</val_0>
+    <val_0>331.111115</val_0>
 </GLINT_MAX_DISTANCE>
 <B_USE_RECORDED_GRINTREF>
     <val_0>1.000000</val_0>

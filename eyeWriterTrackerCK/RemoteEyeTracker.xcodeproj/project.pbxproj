@@ -1697,7 +1697,7 @@
 					"-lpthread",
 				);
 				OTHER_LDFLAGS = "";
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
 			name = ReleaseUniversal;
 		};
@@ -1787,7 +1787,7 @@
 					"-lpthread",
 				);
 				OTHER_LDFLAGS = "";
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
 			name = Debug;
 		};
@@ -1824,7 +1824,7 @@
 					"-lpthread",
 				);
 				OTHER_LDFLAGS = "";
-				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 			};
 			name = Release;
 		};

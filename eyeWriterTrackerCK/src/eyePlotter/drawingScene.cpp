@@ -31,6 +31,7 @@ void drawingScene::setup(float x, float y, float w, float h){
 
 	buttonNav * b = drawingNav.getButton("PAUSED");
 	b->triggerState("PAUSED");
+	b->enable();
 	
 	
 	// -- abb robot stuff
@@ -124,7 +125,7 @@ void drawingScene::eventsIn(buttonNavEvent & event){
 	
 	if( e == "SEND_TO_ROBOT" ){
 		if( abbMode == ABB_DELAYED ){
-			manager.autoScaleGroups(ofRectangle(80, 160, ofGetWidth()-160, ofGetHeight()-200) );
+			manager.autoScaleGroups(ofRectangle(10, 10, ofGetWidth()-20, ofGetHeight()-20) );
 		}
 	
 		buttonNav * b = drawingNav.getButton("PAUSED");
@@ -244,7 +245,21 @@ void drawingScene::update(float mx, float my){
 			currentPoint = targetPoint;
 
 			if( abb.bDrawingStarted ){
-				ofSleepMillis(betweenPointMillis);
+				
+				ofSleepMillis(280);
+				abb.moveUp(0.01, 0.01);
+				ofSleepMillis(280);
+				abb.moveDown(0.01, 0.01, 0);
+				ofSleepMillis(280);
+				abb.moveDown(0.99, 0.0, 0);
+				ofSleepMillis(280);
+				abb.moveDown(0.99, 0.99, 0);
+				ofSleepMillis(280);
+				abb.moveDown(0.01, 0.99, 0);
+				ofSleepMillis(280);
+				abb.moveDown(0.01, 0.01, 0);
+
+				ofSleepMillis(1000);
 				abb.endDrawing();
 			}	
 

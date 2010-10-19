@@ -6,8 +6,8 @@ void calibrationManager::setup(){
 	calibrationInfo.loadImage("images/calibrationInfo.png");
 	font.loadFont("fonts/HelveticaNeueMed.ttf", 32);
 
-	nDivisionsWidth = 3;
-	nDivisionsHeight = 3;
+	nDivisionsWidth		= 3;
+	nDivisionsHeight	= 3;
 
 	nPosition = 0;
 	pos  = 0;
@@ -181,7 +181,7 @@ void calibrationManager::draw(){
 
 		ofEnableAlphaBlending();
 
-		float rad = 30;
+		float rad = 16;
 		glLineWidth(4);
 		ofSetColor(255, 255, 255, 100);
 		ofLine (xp, yp-rad, xp, yp+rad);
@@ -204,7 +204,7 @@ void calibrationManager::draw(){
 			if (bInAutoRecording){
 
 				ofSetColor(255, 0, 0, 200);
-				ofCircle(xp, yp, 26);
+				ofCircle(xp, yp, 14);
 
 				ofSetColor(255, 255,255);
 				ofCircle(xp, yp, 5);

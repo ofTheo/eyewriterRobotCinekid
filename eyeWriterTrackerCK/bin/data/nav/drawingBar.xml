@@ -13,7 +13,7 @@
 		<defaultY>10</defaultY>
 		<defaultWidth>160</defaultWidth>
 		<defaultHeight>90</defaultHeight>
-        <defaultTrigger>0.85</defaultTrigger>
+        <defaultTrigger>0.75</defaultTrigger>
 
 		<button>	
 			<spacing>120</spacing>

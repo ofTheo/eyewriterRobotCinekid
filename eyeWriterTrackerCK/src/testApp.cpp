@@ -100,9 +100,9 @@ void testApp::update(){
 		//if( ofGetElapsedTimef() - timeSince >= 1.0/8.0 ){
 			
 			//To test with mouse comment this line and uncomment the line below
-			if( TM.bGotAnEyeThisFrame() || bMouseSimulation ){
+			//if( TM.bGotAnEyeThisFrame() || bMouseSimulation ){
 				eyeApp.update( pt.x, pt.y, 1.0);
-			}
+			//}
 			//eyeApp.update( mouseX, mouseY );
 			
 		//	timeSince = ofGetElapsedTimef();
@@ -149,7 +149,7 @@ void testApp::draw(){
 		ofRect(0, ofGetHeight()-10, 10, 10);
 	}
 	
-	if( mode == MODE_DRAW && !TM.bGotAnEyeThisFrame() ){
+	if( mode == MODE_DRAW ){
 		ofEnableAlphaBlending();
 		ofSetColor(255, 255, 255, 120);
 		TM.drawInput(0, ofGetHeight()-TM.IM.height/4, TM.IM.width/4, TM.IM.height/4, TM.IM.width/4, ofGetHeight()-TM.IM.height/4, TM.IM.width/4, TM.IM.height/4);	
