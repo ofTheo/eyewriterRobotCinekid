@@ -101,7 +101,7 @@ void eyeTracker::update(ofxCvGrayscaleImage & grayImgFromCam) {
 			else threshold_g = threshold_g_frompanel;
 			
 			// get glint position with dark eye image.
-			gFinder.update(magCurrentImg, threshold_g, minBlobSize_g, maxBlobSize_g, bUseGlintinBrightEye, blobSmoothingSize, blobSmoothingAmount);
+			gFinder.update(magCurrentImg, threshold_g, minBlobSize_g, maxBlobSize_g, bUseGlintinBrightEye, blobSmoothingSize, blobSmoothingAmount, useBoundingBox);
 			
 			if (gFinder.bFound){
 				

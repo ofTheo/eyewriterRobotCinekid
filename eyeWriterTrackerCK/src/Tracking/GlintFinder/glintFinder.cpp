@@ -80,8 +80,35 @@ void glintFinder::recomputeCentroid(ofxCvBlob& blob) {
 	blob.centroid /= n;
 }
 
+void glintFinder::setCentroidsFromBoundingBox(vector<ofxCvBlob>& blobs) {
+	int n = blobs.size();
+	for(int i = 0; i < n; i++) {
+		setCentroidFromBoundingBox(blobs[i]);
+	}
+}
+
+void glintFinder::setCentroidFromBoundingBox(ofxCvBlob& blob) {
+	vector<ofPoint>& pts = blob.pts;
+	int n = pts.size();
+	ofPoint min, max;
+	min = pts[0];
+	max = pts[0];
+	for(int i = 0; i < n; i++) {
+		ofPoint& cur = pts[i];
+		if(cur.x < min.x)
+			min.x = cur.x;
+		if(cur.x > max.x)
+			max.x = cur.x;
+		if(cur.y < min.y)
+			min.y = cur.y;
+		if(cur.y > max.y)
+			max.y = cur.y;
+	}
+	blob.centroid = (max + min) / 2;
+}
+
 //--------------------------------------------------------------------
-bool glintFinder::update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, float minBlobSize, float maxBlobSize, bool bUseBrightEyeCheck, int blobSmoothingSize, float blobSmoothingAmount) {
+bool glintFinder::update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, float minBlobSize, float maxBlobSize, bool bUseBrightEyeCheck, int blobSmoothingSize, float blobSmoothingAmount, bool useBoundingBox) {
 	
 	bFound = false;
 		
@@ -107,13 +134,19 @@ bool glintFinder::update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, 
 	if (bFourGlints) nGlints = 4;
 	else nGlints = 2;
 	
-	bool willSmooth = (blobSmoothingAmount > 0);
+	bool willSmooth = (blobSmoothingAmount > 0); // big willy styleee
 	// if blobSmoothing is on, we need to make sure we're not approximating the contour
 	// otherwise the contour points won't be evenly distributed for the smoothing pass
 	contourFinder.findContours(eyeImage, minBlobSize, maxBlobSize, nGlints + 4, true, !willSmooth);
 	
+	// smooth the glint contours and set the blobs centroids based on the average of the points, don't change the bounding box
 	if(willSmooth) {
 		smoothBlobs(contourFinder.blobs, blobSmoothingSize, blobSmoothingAmount);
+	}
+	
+	// compute the bounding box, but don't set it, and use the bounding box center as the blob centroid
+	if(useBoundingBox) {
+		setCentroidsFromBoundingBox(contourFinder.blobs);
 	}
 	
 	eyeImage.resetROI();

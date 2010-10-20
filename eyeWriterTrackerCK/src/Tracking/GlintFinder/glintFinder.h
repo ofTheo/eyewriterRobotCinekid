@@ -13,7 +13,7 @@ class glintFinder {
 public:
 	
 	void		setup(int eyeWidth,int eyeHeight, float _magRatio, float IMwidth, float IMheight);
-	bool		update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, float minBlobSize, float maxBlobSize, bool bUseBrightEyeCheck, int blobSmoothingSize, float blobSmoothingAmount);
+	bool		update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, float minBlobSize, float maxBlobSize, bool bUseBrightEyeCheck, int blobSmoothingSize, float blobSmoothingAmount, bool useBoundingBox);
 	void		drawLine(float x, float y, float width, float height, float len);
 	void		drawLineOnBrightGlint(float x, float y, float width, float height, float len);
 	void		draw(float x, float y);
@@ -23,6 +23,8 @@ public:
 	void smoothBlobs(vector<ofxCvBlob>& blobs, int smoothingSize, float smoothingAmount);
 	void smoothBlob(ofxCvBlob& blob, int smoothingSize, float smoothingAmount);
 	void recomputeCentroid(ofxCvBlob& blob);
+	void setCentroidsFromBoundingBox(vector<ofxCvBlob>& blobs);
+	void setCentroidFromBoundingBox(ofxCvBlob& blob);
 	
 	glintLineChecker		gLineChecker;
 	ofxCvContourFinder		contourFinder;

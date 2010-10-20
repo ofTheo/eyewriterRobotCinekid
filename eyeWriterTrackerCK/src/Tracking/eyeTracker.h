@@ -71,6 +71,7 @@ public:
 	float			maxBlobSize_g;
 	float blobSmoothingAmount;
 	int blobSmoothingSize;
+	bool useBoundingBox;
 	
 	//Bright/Dark Threshold
 	bool				bFoundOne;
