@@ -17,10 +17,12 @@ void calibrationManager::setup(){
 	bAutomatic = false;
 	bPreAutomatic = false;
 	bAmInAutodrive = false;
-
+	bShowAutoRecording = false;
+	
 	startTime = ofGetElapsedTimef();
 	preTimePerDot = 10.0;
 	recordTimePerDot = 0.4;
+	postTimePerDot = 0.1;
 	totalTimePerDot = preTimePerDot + recordTimePerDot;
 	bInAutoRecording = false;
 	autoPct = 0;
@@ -48,7 +50,7 @@ void calibrationManager::setup(){
 
 //--------------------------------------------------------------
 void calibrationManager::start(){
-	
+
 	bAutomatic = true;
 	bAmInAutodrive = true;
 	startTime = ofGetElapsedTimef();
@@ -105,6 +107,8 @@ void calibrationManager::update(){
 		menuEnergy = 0.94f * menuEnergy + 0.06f * 1.0f;
 	}
 	
+	bShowAutoRecording = bInAutoRecording;
+	
 	// do the auto:
 	if (bAutomatic == true && bAmInAutodrive == true){
 		int nPts = nDivisionsWidth * nDivisionsHeight;
@@ -115,7 +119,7 @@ void calibrationManager::update(){
 			bInAutoRecording = false;
 			bPreAutomatic = false;
 			fitter.calculate(calibrationRectangle);
-			
+			bShowAutoRecording = bInAutoRecording;
 		} else {
 
 			float diffTime = ofGetElapsedTimef() - startTime ;
@@ -126,10 +130,21 @@ void calibrationManager::update(){
 
 				autoPct = (diffDotTime / preTimePerDot);
 				bInAutoRecording = false;
+				bShowAutoRecording = bInAutoRecording;
 
 			} else {
 				autoPct = (diffDotTime - preTimePerDot) / recordTimePerDot;
-				bInAutoRecording = true;
+				
+				if( diffDotTime > (totalTimePerDot-postTimePerDot) ){
+					bInAutoRecording = false;
+					
+					//here we say still show it even though we are not recording
+					//trick people!!
+					bShowAutoRecording = true;
+				}else{
+					bInAutoRecording = true;
+					bShowAutoRecording = bInAutoRecording;
+				}
 			}
 			pos = pt;
 		}
@@ -201,9 +216,13 @@ void calibrationManager::draw(){
 		// TODO: do some animation stuff here:
 		if (bAutomatic == true && bAmInAutodrive == true){
 
-			if (bInAutoRecording){
+			if (bShowAutoRecording){
 
-				ofSetColor(255, 0, 0, 200);
+				if( bInAutoRecording ){
+					ofSetColor(255, 0, 0, 200);
+				}else{
+					ofSetColor(180, 70, 30, 200);
+				}
 				ofCircle(xp, yp, 14);
 
 				ofSetColor(255, 255,255);
@@ -288,6 +307,8 @@ void calibrationManager::keyPressed(int key) {
 	if (bPreAutomatic == true){
 		if (key == ' '){
 			bPreAutomatic = false;
+			clear();
+			stop();
 			start();
 		}
 	}else if (bPreAutomatic == false && !bAmInAutodrive) { 

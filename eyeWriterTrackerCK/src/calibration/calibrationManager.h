@@ -44,10 +44,12 @@ class calibrationManager {
 		bool		bPreAutomatic;
 		bool		bAutomatic;
 		bool		bAmInAutodrive;
+		bool		bShowAutoRecording;
 		float		startTime;
 		float		preTimePerDot;
 		float		recordTimePerDot;
 		float		totalTimePerDot;
+		float		postTimePerDot;
 		bool		bInAutoRecording;
 		bool		bRemovePointsFarFromAverage;
 

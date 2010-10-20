@@ -8,7 +8,7 @@
     <val_0>0.562778</val_0>
 </PRE_RECORD_TIME>
 <RECORD_TIME>
-    <val_0>0.400000</val_0>
+    <val_0>0.496667</val_0>
 </RECORD_TIME>
 <START_AUTO>
     <val_0>0.000000</val_0>
@@ -67,3 +67,6 @@
 <B_MOUSE_SIMULATION>
     <val_0>0.000000</val_0>
 </B_MOUSE_SIMULATION>
+<POST_TIME>
+    <val_0>0.197778</val_0>
+</POST_TIME>

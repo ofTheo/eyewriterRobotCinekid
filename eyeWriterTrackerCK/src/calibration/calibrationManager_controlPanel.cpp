@@ -15,8 +15,9 @@ void calibrationManager::setupControlPanel(){
 	panel.addSlider("num divisions horiz", "N_DIV_W", nDivisionsWidth, 2, 15, true);
 	panel.addSlider("num divisions vert", "N_DIV_H", nDivisionsHeight, 2, 15, true);
 
-	panel.addSlider("(auto) time to pre-record", "PRE_RECORD_TIME", preTimePerDot, 0.1, 5, false);
-	panel.addSlider("(auto) time for record", "RECORD_TIME", recordTimePerDot, 0.1, 1.5, false);
+	panel.addSlider("time to pre-record", "PRE_RECORD_TIME", preTimePerDot, 0.1, 5, false);
+	panel.addSlider("time for record", "RECORD_TIME", recordTimePerDot, 0.1, 1.5, false);
+	panel.addSlider("time for post-record", "POST_TIME", 0.0, 0.05, 1.0, false);
 
 	panel.addToggle("remove points far from each average", "B_REMOVE_FAR_AVERAGE", false);
 	panel.addSlider("threshold distance(multiplier to avrage)", "THRESHOLD_DIST", 1.7, 0, 4, false);
@@ -55,8 +56,9 @@ void calibrationManager::updateControlPanel(){
 	
 	panel.update();
 
-	preTimePerDot = panel.getValueF("PRE_RECORD_TIME");;
-	recordTimePerDot = panel.getValueF("RECORD_TIME");;
+	preTimePerDot = panel.getValueF("PRE_RECORD_TIME");
+	recordTimePerDot = panel.getValueF("RECORD_TIME");
+	postTimePerDot = panel.getValueF("POST_TIME");
 	smoothing = panel.getValueF("AMOUNT_SMOOTHING");
 	
 	fitter.removeOutliersf = panel.getValueF("REMOVE_OUTLIERS");
