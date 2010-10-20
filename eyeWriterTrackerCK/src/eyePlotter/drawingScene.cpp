@@ -24,7 +24,7 @@ void drawingScene::setup(float x, float y, float w, float h){
 	
 	bounds	= ofRectangle(x, y, w, h);
 	timer.setWaitTime(0.7);
-	
+				
 	drawingNav.setup("nav/drawingBar.xml", "nav/icons/");
 	ofAddListener(drawingNav.navEvent,this,&drawingScene::eventsIn);
 	ofAddListener(manager.actionEvent,this,&drawingScene::strokeEvents);
@@ -75,6 +75,17 @@ void drawingScene::setup(float x, float y, float w, float h){
 	panel.addSlider("buttonTime", "buttonTime", 0.75, 0.2, 1.8, false);
 	panel.loadSettings("Settings/drawingSettings.xml");
 	panel.hide();
+}
+
+//------------------------------------------------------------------------
+void drawingScene::loadStringToRobot(string msg){
+	typeWriter.loadTypeFaceForMsg("gml/TemptAtoZ.gml", msg, manager);
+
+	//manager.group.groups = typeWriter.group.groups;
+	//manager.autoScaleGroups(ofRectangle(10, 10, ofGetWidth()-20, ofGetHeight()-20), 0.06);	
+	
+	buttonNav * b = drawingNav.getButton("SEND_TO_ROBOT");
+	b->triggerState("SEND_TO_ROBOT");		
 }
 
 //------------------------------------------------------------------------
@@ -134,7 +145,7 @@ void drawingScene::eventsIn(buttonNavEvent & event){
 	
 	if( e == "SEND_TO_ROBOT" ){
 		if( abbMode == ABB_DELAYED ){
-			manager.autoScaleGroups(ofRectangle(10, 10, ofGetWidth()-20, ofGetHeight()-20) );
+			manager.autoScaleGroups(ofRectangle(10, 10, ofGetWidth()-20, ofGetHeight()-20), 10);
 		}
 	
 		buttonNav * b = drawingNav.getButton("PAUSED");

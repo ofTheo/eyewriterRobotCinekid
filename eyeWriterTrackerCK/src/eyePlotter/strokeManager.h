@@ -28,7 +28,7 @@ class strokeManager{
 		
 		ofPoint getPoint(int thePoint, bool & bFirstStroke, bool & bLastStroke);
 		
-		void autoScaleGroups(ofRectangle targetRect);
+		void autoScaleGroups(ofRectangle targetRect, float spacing = 0.0);
 				
 		void draw();
 		void drawGuideLine(float tx, float ty);
@@ -43,7 +43,7 @@ class strokeManager{
 		
 		groupCollection group;
 		
-	private:
+	//private:
 		void sendEvent(string eventType);		
 
 };

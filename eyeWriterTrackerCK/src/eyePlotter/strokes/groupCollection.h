@@ -79,7 +79,7 @@ class groupCollection{
 		return false;
 	}
 
-	protected:
+	//protected:
 		vector <strokeGroup> groups;
 
 };

@@ -8,6 +8,7 @@
  */
 
 #include "typingScene.h"
+#include "testApp.h"
 
 //switch to gui
 extern  int buttonCount; 
@@ -64,35 +65,35 @@ void typingScene::setup(){
 	
 	xadd = 350;
 	
-	buttonTrigger semiButton;
-	semiButton.setup(":\n;", 825+xadd, 295+yadd, bWidth, bHeight);
-	semiButton.setMaxCounter(buttonCount);
-	semiButton.setRetrigger(false);
-	letterButtons.push_back(semiButton);
-	
-	buttonTrigger quoteButton;
-	quoteButton.setup("\"\n'", 915+xadd, 295+yadd, bWidth, bHeight);
-	quoteButton.setMaxCounter(buttonCount);
-	quoteButton.setRetrigger(false);
-	letterButtons.push_back(quoteButton);
-	
-	buttonTrigger commaButton;
-	commaButton.setup("<\n,", 735+xadd, 385+yadd, bWidth, bHeight);
-	commaButton.setMaxCounter(buttonCount);
-	commaButton.setRetrigger(false);
-	letterButtons.push_back(commaButton);
-	
-	buttonTrigger periodButton;
-	periodButton.setup(">\n.", 825+xadd, 385+yadd, bWidth, bHeight);
-	periodButton.setMaxCounter(buttonCount);
-	periodButton.setRetrigger(false);
-	letterButtons.push_back(periodButton);
-	
-	buttonTrigger questionButton;
-	questionButton.setup("?\n/", 915+xadd, 385+yadd, bWidth, bHeight);
-	questionButton.setMaxCounter(buttonCount);
-	questionButton.setRetrigger(false);
-	letterButtons.push_back(questionButton);
+//	buttonTrigger semiButton;
+//	semiButton.setup(":\n;", 825+xadd, 295+yadd, bWidth, bHeight);
+//	semiButton.setMaxCounter(buttonCount);
+//	semiButton.setRetrigger(false);
+//	letterButtons.push_back(semiButton);
+//	
+//	buttonTrigger quoteButton;
+//	quoteButton.setup("\"\n'", 915+xadd, 295+yadd, bWidth, bHeight);
+//	quoteButton.setMaxCounter(buttonCount);
+//	quoteButton.setRetrigger(false);
+//	letterButtons.push_back(quoteButton);
+//	
+//	buttonTrigger commaButton;
+//	commaButton.setup("<\n,", 735+xadd, 385+yadd, bWidth, bHeight);
+//	commaButton.setMaxCounter(buttonCount);
+//	commaButton.setRetrigger(false);
+//	letterButtons.push_back(commaButton);
+//	
+//	buttonTrigger periodButton;
+//	periodButton.setup(">\n.", 825+xadd, 385+yadd, bWidth, bHeight);
+//	periodButton.setMaxCounter(buttonCount);
+//	periodButton.setRetrigger(false);
+//	letterButtons.push_back(periodButton);
+//	
+//	buttonTrigger questionButton;
+//	questionButton.setup("?\n/", 915+xadd, 385+yadd, bWidth, bHeight);
+//	questionButton.setMaxCounter(buttonCount);
+//	questionButton.setRetrigger(false);
+//	letterButtons.push_back(questionButton);
 	
 	//buttonTrigger deleteButton;
 //	deleteButton.setup("ENTER", 735+xadd, 475+yadd, bWidth*2+15, bHeight);
@@ -110,7 +111,7 @@ void typingScene::setup(){
 	letterButtons.push_back(enterButton);
 	
 	buttonTrigger speakAllButton;
-	speakAllButton.setup("SPEAK", 323+xadd - 230, 475+yadd+shiftY-10, bWidth*2+15, bHeight);
+	speakAllButton.setup("SEND TO ROBOT", 323+xadd - 230, 475+yadd+shiftY-10, bWidth*2+15, bHeight);
 	speakAllButton.setMaxCounter(buttonCount);
 	speakAllButton.setRetrigger(false);
 	letterButtons.push_back(speakAllButton);
@@ -172,10 +173,10 @@ void typingScene::setup(){
 	letterButtons_lower.push_back("z");
 	letterButtons_lower.push_back(";");
 	
-	letterButtons_lower.push_back("'");
-	letterButtons_lower.push_back(",");
-	letterButtons_lower.push_back(".");
-	letterButtons_lower.push_back("/");
+//	letterButtons_lower.push_back("'");
+//	letterButtons_lower.push_back(",");
+//	letterButtons_lower.push_back(".");
+//	letterButtons_lower.push_back("/");
 	
 	
 	for (int i = 0; i < letterButtons.size(); i++){
@@ -231,9 +232,12 @@ void typingScene::update(float mouseX, float mouseY){
 				carriageReturnCounter = 0;
 			}
 			
-			else if (letterButtons[i].displayText == "SPEAK"){
+			else if (letterButtons[i].displayText == "SEND TO ROBOT"){
 				if (displayMessage.size() > 0){
-					speakMe(displayMessage.c_str());
+					//speakMe(displayMessage.c_str());
+					testApp * tApp = (testApp*)ofGetAppPtr();
+					tApp->eyeApp.drawScene.loadStringToRobot(displayMessage);
+					tApp->mode = MODE_DRAW;
 				}
 			}
 			
@@ -242,66 +246,66 @@ void typingScene::update(float mouseX, float mouseY){
 					displayMessage.resize (displayMessage.size () - 1);
 				}
 			}			
-			else if (shiftOn && (letterButtons[i].displayText == "!\n1")){
-				displayMessage.push_back('!');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "@\n2")){
-				displayMessage.push_back('@');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "#\n3")){
-				displayMessage.push_back('#');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "$\n4")){
-				displayMessage.push_back('$');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "%\n5")){
-				displayMessage.push_back('%');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "^\n6")){
-				displayMessage.push_back('^');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "&\n7")){
-				displayMessage.push_back('&');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "*\n8")){
-				displayMessage.push_back('*');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "(\n9")){
-				displayMessage.push_back('(');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == ")\n0")){
-				displayMessage.push_back(')');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == ":\n;")){
-				displayMessage.push_back(':');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "\"\n'")){
-				displayMessage.push_back('\"');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "<\n,")){
-				displayMessage.push_back('<');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == ">\n.")){
-				displayMessage.push_back('>');
-				carriageReturnCounter++;
-			}
-			else if (shiftOn && (letterButtons[i].displayText == "?\n/")){
-				displayMessage.push_back('?');
-				carriageReturnCounter++;
-			}
+//			else if (shiftOn && (letterButtons[i].displayText == "!\n1")){
+//				displayMessage.push_back('!');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "@\n2")){
+//				displayMessage.push_back('@');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "#\n3")){
+//				displayMessage.push_back('#');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "$\n4")){
+//				displayMessage.push_back('$');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "%\n5")){
+//				displayMessage.push_back('%');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "^\n6")){
+//				displayMessage.push_back('^');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "&\n7")){
+//				displayMessage.push_back('&');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "*\n8")){
+//				displayMessage.push_back('*');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "(\n9")){
+//				displayMessage.push_back('(');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == ")\n0")){
+//				displayMessage.push_back(')');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == ":\n;")){
+//				displayMessage.push_back(':');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "\"\n'")){
+//				displayMessage.push_back('\"');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "<\n,")){
+//				displayMessage.push_back('<');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == ">\n.")){
+//				displayMessage.push_back('>');
+//				carriageReturnCounter++;
+//			}
+//			else if (shiftOn && (letterButtons[i].displayText == "?\n/")){
+//				displayMessage.push_back('?');
+//				carriageReturnCounter++;
+//			}
 			else {
 				if (shiftOn){
 					displayMessage.push_back(letterButtons[i].displayText.c_str()[0]);

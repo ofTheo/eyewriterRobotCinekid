@@ -78,6 +78,7 @@
 		CFD61E4212272ABA0026C82D /* ofxCvGrayscaleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFD61E3212272ABA0026C82D /* ofxCvGrayscaleImage.cpp */; };
 		CFD61E4312272ABA0026C82D /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFD61E3412272ABA0026C82D /* ofxCvImage.cpp */; };
 		CFD61E4412272ABA0026C82D /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFD61E3712272ABA0026C82D /* ofxCvShortImage.cpp */; };
+		E40C917D126F4F3700D5FE7D /* temptTypeWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E40C917C126F4F3700D5FE7D /* temptTypeWriter.cpp */; };
 		E4327DC1126C7A86002075BE /* scribbleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4327DC0126C7A86002075BE /* scribbleScene.cpp */; };
 		E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE0A90E8CC67C009D7055 /* GLee.a */; };
 		E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE2E30E8CC69C009D7055 /* rtAudio.a */; };
@@ -372,6 +373,8 @@
 		CFD61E3912272ABA0026C82D /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
 		CFD8341F122820A500694F62 /* threadedImgSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadedImgSaver.h; sourceTree = "<group>"; };
 		CFD83470122828A800694F62 /* ofxFileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFileHelper.h; sourceTree = "<group>"; };
+		E40C917B126F4F3700D5FE7D /* temptTypeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temptTypeWriter.h; sourceTree = "<group>"; };
+		E40C917C126F4F3700D5FE7D /* temptTypeWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = temptTypeWriter.cpp; sourceTree = "<group>"; };
 		E4327DBF126C7A86002075BE /* scribbleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scribbleScene.h; sourceTree = "<group>"; };
 		E4327DC0126C7A86002075BE /* scribbleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scribbleScene.cpp; sourceTree = "<group>"; };
 		E45BE0390E8CC647009D7055 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeImage.h; path = ../../../libs/freeimage/include/FreeImage.h; sourceTree = SOURCE_ROOT; };
@@ -1254,6 +1257,8 @@
 				E47FBD431269007100937867 /* strokeManager.cpp */,
 				E47FBD441269007100937867 /* strokeManager.h */,
 				E47FBD391269007100937867 /* buttonNav.cpp */,
+				E40C917C126F4F3700D5FE7D /* temptTypeWriter.cpp */,
+				E40C917B126F4F3700D5FE7D /* temptTypeWriter.h */,
 				E47FBD3A1269007100937867 /* buttonNav.h */,
 				E47FBD541269007100937867 /* xmlNav.cpp */,
 				E47FBD551269007100937867 /* xmlNav.h */,
@@ -1660,6 +1665,7 @@
 				E4CB0784126F091000AA2A5D /* ofxTCPManager.cpp in Sources */,
 				E4CB0785126F091000AA2A5D /* ofxTCPServer.cpp in Sources */,
 				E4CB0786126F091000AA2A5D /* ofxUDPManager.cpp in Sources */,
+				E40C917D126F4F3700D5FE7D /* temptTypeWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

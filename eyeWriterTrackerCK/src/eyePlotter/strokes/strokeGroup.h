@@ -19,6 +19,11 @@ class strokeGroup{
 			newStrokeOnNext		= true;
 			isCurve				= false;
 			isSelected			= false;
+			rightSpacing		= 0.0;
+		}
+		
+		void setRightSpacing(float rightSpacingIn){
+			rightSpacing = rightSpacingIn;
 		}
 		
 		void undo(){
@@ -248,6 +253,8 @@ class strokeGroup{
 				strokes[i].draw(lastCircle);
 			}
 		}
+		
+		float rightSpacing;
 		
 		bool isSelected;
 		bool isCurve;

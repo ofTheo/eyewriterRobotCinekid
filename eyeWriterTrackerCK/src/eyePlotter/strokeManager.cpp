@@ -72,8 +72,8 @@ void strokeManager::sendEvent(string eventType){
 }
 
 //-------------------------------------------------------------------
-void strokeManager::autoScaleGroups(ofRectangle targetRect){
-	strokeUtils::autoPlaceAndScaleByWidth(group.getVector(), targetRect, false);
+void strokeManager::autoScaleGroups(ofRectangle targetRect, float spacing){
+	strokeUtils::autoPlaceAndScaleByWidth(group.getVector(), targetRect, false, spacing);
 }
 
 //-------------------------------------------------------------------

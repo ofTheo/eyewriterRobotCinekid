@@ -13,6 +13,7 @@
 #include "eyeTimer.h"
 #include "strokeToABB.h"
 #include "ofxControlPanel.h"
+#include "temptTypeWriter.h"
 
 class drawingScene{
 	public:
@@ -24,6 +25,8 @@ class drawingScene{
 		void strokeEvents(strokeEvent & event);
 		
 		void sendLetterToRobot(strokeGroup & g, int sleepTime);		
+
+		void loadStringToRobot(string msg);
 
 		void clearOffset();
 
@@ -38,6 +41,7 @@ class drawingScene{
 		void mouseReleased(int x, int y, int button);
 		void keyPressed(int key);
 		
+		temptTypeWriter typeWriter;
 		
 		void checkOffset();
 		bool bOffsetCheck;

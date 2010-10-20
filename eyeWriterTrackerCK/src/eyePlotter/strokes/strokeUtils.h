@@ -89,7 +89,7 @@ class strokeUtils{
 	}
 
 	
-	static void autoPlaceAndScaleByWidth(vector <strokeGroup> & strokeGroups, ofRectangle fitRect, bool bCheckSelectionFlag = true){
+	static void autoPlaceAndScaleByWidth(vector <strokeGroup> & strokeGroups, ofRectangle fitRect, bool bCheckSelectionFlag = true, float letterSpacing = 0.0){
 		
 		float posX = fitRect.x;
 		float posY = fitRect.y;
@@ -112,7 +112,15 @@ class strokeUtils{
 			
 			strokeGroups[i].shift(xDiff, yDiff);
 			
-			posX += bounding.width;
+			posX += bounding.width + letterSpacing * scaleAmnt;
+			
+			if( strokeGroups[i].rightSpacing > 0.0 ){
+			
+				printf("shifting by %f\n", strokeGroups[i].rightSpacing * scaleAmnt);
+				posX += strokeGroups[i].rightSpacing * scaleAmnt;
+			
+			}
+			
 		}
 		
 		ofRectangle rect = strokeUtils::getBoundingRectFromGroups(strokeGroups, bCheckSelectionFlag);
