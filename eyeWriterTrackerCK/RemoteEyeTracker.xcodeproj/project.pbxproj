@@ -91,10 +91,6 @@
 		E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9790E8CC7DD009D7055 /* OpenGL.framework */; };
 		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E46962AB126A583300061A4A /* strokeToABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E46962A9126A583300061A4A /* strokeToABB.cpp */; };
-		E46962D7126AF32000061A4A /* ofxTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E46962CF126AF32000061A4A /* ofxTCPClient.cpp */; };
-		E46962D8126AF32000061A4A /* ofxTCPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E46962D1126AF32000061A4A /* ofxTCPManager.cpp */; };
-		E46962D9126AF32000061A4A /* ofxTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E46962D3126AF32000061A4A /* ofxTCPServer.cpp */; };
-		E46962DA126AF32000061A4A /* ofxUDPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E46962D5126AF32000061A4A /* ofxUDPManager.cpp */; };
 		E47FBD561269007100937867 /* buttonNav.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47FBD391269007100937867 /* buttonNav.cpp */; };
 		E47FBD571269007100937867 /* drawingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47FBD3B1269007100937867 /* drawingScene.cpp */; };
 		E47FBD581269007100937867 /* eyeCursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47FBD3D1269007100937867 /* eyeCursor.cpp */; };
@@ -116,7 +112,7 @@
 		E47FBD8B1269010300937867 /* baseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47FBD831269010300937867 /* baseScene.cpp */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
-		E4C2422B10CC554B004149E2 /* openFrameworks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworks.a */; };
+		E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */; };
 		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
@@ -131,6 +127,10 @@
 		E4C242CD10CC650E004149E2 /* libfmodex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C242CC10CC650E004149E2 /* libfmodex.dylib */; };
 		E4C2443910CC7693004149E2 /* openFrameworks-Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */; };
 		E4C246DA10CCAE22004149E2 /* freeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C246D910CCAE22004149E2 /* freeimage.a */; };
+		E4CB0783126F091000AA2A5D /* ofxTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4CB077B126F091000AA2A5D /* ofxTCPClient.cpp */; };
+		E4CB0784126F091000AA2A5D /* ofxTCPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4CB077D126F091000AA2A5D /* ofxTCPManager.cpp */; };
+		E4CB0785126F091000AA2A5D /* ofxTCPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4CB077F126F091000AA2A5D /* ofxTCPServer.cpp */; };
+		E4CB0786126F091000AA2A5D /* ofxUDPManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4CB0781126F091000AA2A5D /* ofxUDPManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -397,16 +397,6 @@
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		E46962A9126A583300061A4A /* strokeToABB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = strokeToABB.cpp; path = src/eyePlotter/abb/strokeToABB.cpp; sourceTree = SOURCE_ROOT; };
 		E46962AA126A583300061A4A /* strokeToABB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strokeToABB.h; path = src/eyePlotter/abb/strokeToABB.h; sourceTree = SOURCE_ROOT; };
-		E46962CD126AF32000061A4A /* ofxNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNetwork.h; path = ../../../addons/ofxNetwork/src/ofxNetwork.h; sourceTree = SOURCE_ROOT; };
-		E46962CE126AF32000061A4A /* ofxNetworkUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNetworkUtils.h; path = ../../../addons/ofxNetwork/src/ofxNetworkUtils.h; sourceTree = SOURCE_ROOT; };
-		E46962CF126AF32000061A4A /* ofxTCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxTCPClient.cpp; path = ../../../addons/ofxNetwork/src/ofxTCPClient.cpp; sourceTree = SOURCE_ROOT; };
-		E46962D0126AF32000061A4A /* ofxTCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxTCPClient.h; path = ../../../addons/ofxNetwork/src/ofxTCPClient.h; sourceTree = SOURCE_ROOT; };
-		E46962D1126AF32000061A4A /* ofxTCPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxTCPManager.cpp; path = ../../../addons/ofxNetwork/src/ofxTCPManager.cpp; sourceTree = SOURCE_ROOT; };
-		E46962D2126AF32000061A4A /* ofxTCPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxTCPManager.h; path = ../../../addons/ofxNetwork/src/ofxTCPManager.h; sourceTree = SOURCE_ROOT; };
-		E46962D3126AF32000061A4A /* ofxTCPServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxTCPServer.cpp; path = ../../../addons/ofxNetwork/src/ofxTCPServer.cpp; sourceTree = SOURCE_ROOT; };
-		E46962D4126AF32000061A4A /* ofxTCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxTCPServer.h; path = ../../../addons/ofxNetwork/src/ofxTCPServer.h; sourceTree = SOURCE_ROOT; };
-		E46962D5126AF32000061A4A /* ofxUDPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxUDPManager.cpp; path = ../../../addons/ofxNetwork/src/ofxUDPManager.cpp; sourceTree = SOURCE_ROOT; };
-		E46962D6126AF32000061A4A /* ofxUDPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxUDPManager.h; path = ../../../addons/ofxNetwork/src/ofxUDPManager.h; sourceTree = SOURCE_ROOT; };
 		E47FBD391269007100937867 /* buttonNav.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = buttonNav.cpp; path = src/eyePlotter/buttonNav.cpp; sourceTree = SOURCE_ROOT; };
 		E47FBD3A1269007100937867 /* buttonNav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = buttonNav.h; path = src/eyePlotter/buttonNav.h; sourceTree = SOURCE_ROOT; };
 		E47FBD3B1269007100937867 /* drawingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = drawingScene.cpp; path = src/eyePlotter/drawingScene.cpp; sourceTree = SOURCE_ROOT; };
@@ -468,6 +458,18 @@
 		E4C2429310CC5C38004149E2 /* freetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = freetype.a; path = ../../../libs/freetype/lib/osx/freetype.a; sourceTree = SOURCE_ROOT; };
 		E4C242CC10CC650E004149E2 /* libfmodex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfmodex.dylib; path = ../../../libs/fmodex/lib/osx/libfmodex.dylib; sourceTree = SOURCE_ROOT; };
 		E4C246D910CCAE22004149E2 /* freeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = freeimage.a; path = ../../../libs/FreeImage/lib/osx/freeimage.a; sourceTree = SOURCE_ROOT; };
+		E4CB0776126F091000AA2A5D /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Instructions.txt; path = src/addons/ofxNetwork/docs/Instructions.txt; sourceTree = SOURCE_ROOT; };
+		E4CB0777126F091000AA2A5D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = install.xml; path = src/addons/ofxNetwork/install.xml; sourceTree = SOURCE_ROOT; };
+		E4CB0779126F091000AA2A5D /* ofxNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNetwork.h; path = src/addons/ofxNetwork/src/ofxNetwork.h; sourceTree = SOURCE_ROOT; };
+		E4CB077A126F091000AA2A5D /* ofxNetworkUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNetworkUtils.h; path = src/addons/ofxNetwork/src/ofxNetworkUtils.h; sourceTree = SOURCE_ROOT; };
+		E4CB077B126F091000AA2A5D /* ofxTCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxTCPClient.cpp; path = src/addons/ofxNetwork/src/ofxTCPClient.cpp; sourceTree = SOURCE_ROOT; };
+		E4CB077C126F091000AA2A5D /* ofxTCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxTCPClient.h; path = src/addons/ofxNetwork/src/ofxTCPClient.h; sourceTree = SOURCE_ROOT; };
+		E4CB077D126F091000AA2A5D /* ofxTCPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxTCPManager.cpp; path = src/addons/ofxNetwork/src/ofxTCPManager.cpp; sourceTree = SOURCE_ROOT; };
+		E4CB077E126F091000AA2A5D /* ofxTCPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxTCPManager.h; path = src/addons/ofxNetwork/src/ofxTCPManager.h; sourceTree = SOURCE_ROOT; };
+		E4CB077F126F091000AA2A5D /* ofxTCPServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxTCPServer.cpp; path = src/addons/ofxNetwork/src/ofxTCPServer.cpp; sourceTree = SOURCE_ROOT; };
+		E4CB0780126F091000AA2A5D /* ofxTCPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxTCPServer.h; path = src/addons/ofxNetwork/src/ofxTCPServer.h; sourceTree = SOURCE_ROOT; };
+		E4CB0781126F091000AA2A5D /* ofxUDPManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxUDPManager.cpp; path = src/addons/ofxNetwork/src/ofxUDPManager.cpp; sourceTree = SOURCE_ROOT; };
+		E4CB0782126F091000AA2A5D /* ofxUDPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxUDPManager.h; path = src/addons/ofxNetwork/src/ofxUDPManager.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,7 +477,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C2422B10CC554B004149E2 /* openFrameworks.a in Frameworks */,
+				E4C2422B10CC554B004149E2 /* openFrameworksDebug.a in Frameworks */,
 				E45BE0AA0E8CC67C009D7055 /* GLee.a in Frameworks */,
 				E45BE2E40E8CC69C009D7055 /* rtAudio.a in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
@@ -523,7 +525,7 @@
 		CFD61CE1122729D20026C82D /* AddOns */ = {
 			isa = PBXGroup;
 			children = (
-				E46962C8126AF32000061A4A /* ofxNetwork */,
+				E4CB0774126F091000AA2A5D /* ofxNetwork */,
 				CFD8346F122828A800694F62 /* ofxFileHelper */,
 				CFD61DEF12272ABA0026C82D /* ofxLibdc */,
 				CFD61E1112272ABA0026C82D /* ofxOpenCv */,
@@ -1239,33 +1241,6 @@
 			path = src/eyePlotter/abb;
 			sourceTree = SOURCE_ROOT;
 		};
-		E46962C8126AF32000061A4A /* ofxNetwork */ = {
-			isa = PBXGroup;
-			children = (
-				E46962CC126AF32000061A4A /* src */,
-			);
-			name = ofxNetwork;
-			path = ../../../addons/ofxNetwork;
-			sourceTree = SOURCE_ROOT;
-		};
-		E46962CC126AF32000061A4A /* src */ = {
-			isa = PBXGroup;
-			children = (
-				E46962CD126AF32000061A4A /* ofxNetwork.h */,
-				E46962CE126AF32000061A4A /* ofxNetworkUtils.h */,
-				E46962CF126AF32000061A4A /* ofxTCPClient.cpp */,
-				E46962D0126AF32000061A4A /* ofxTCPClient.h */,
-				E46962D1126AF32000061A4A /* ofxTCPManager.cpp */,
-				E46962D2126AF32000061A4A /* ofxTCPManager.h */,
-				E46962D3126AF32000061A4A /* ofxTCPServer.cpp */,
-				E46962D4126AF32000061A4A /* ofxTCPServer.h */,
-				E46962D5126AF32000061A4A /* ofxUDPManager.cpp */,
-				E46962D6126AF32000061A4A /* ofxUDPManager.h */,
-			);
-			name = src;
-			path = ../../../addons/ofxNetwork/src;
-			sourceTree = SOURCE_ROOT;
-		};
 		E47FBD381269007100937867 /* eyePlotter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1386,7 +1361,7 @@
 		E4C2421710CC549C004149E2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4C2421E10CC549C004149E2 /* openFrameworks.a */,
+				E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1466,6 +1441,44 @@
 			path = ../../../libs/FreeImage/lib/osx;
 			sourceTree = SOURCE_ROOT;
 		};
+		E4CB0774126F091000AA2A5D /* ofxNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				E4CB0775126F091000AA2A5D /* docs */,
+				E4CB0777126F091000AA2A5D /* install.xml */,
+				E4CB0778126F091000AA2A5D /* src */,
+			);
+			name = ofxNetwork;
+			path = src/addons/ofxNetwork;
+			sourceTree = SOURCE_ROOT;
+		};
+		E4CB0775126F091000AA2A5D /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				E4CB0776126F091000AA2A5D /* Instructions.txt */,
+			);
+			name = docs;
+			path = src/addons/ofxNetwork/docs;
+			sourceTree = SOURCE_ROOT;
+		};
+		E4CB0778126F091000AA2A5D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E4CB0779126F091000AA2A5D /* ofxNetwork.h */,
+				E4CB077A126F091000AA2A5D /* ofxNetworkUtils.h */,
+				E4CB077B126F091000AA2A5D /* ofxTCPClient.cpp */,
+				E4CB077C126F091000AA2A5D /* ofxTCPClient.h */,
+				E4CB077D126F091000AA2A5D /* ofxTCPManager.cpp */,
+				E4CB077E126F091000AA2A5D /* ofxTCPManager.h */,
+				E4CB077F126F091000AA2A5D /* ofxTCPServer.cpp */,
+				E4CB0780126F091000AA2A5D /* ofxTCPServer.h */,
+				E4CB0781126F091000AA2A5D /* ofxUDPManager.cpp */,
+				E4CB0782126F091000AA2A5D /* ofxUDPManager.h */,
+			);
+			name = src;
+			path = src/addons/ofxNetwork/src;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1496,6 +1509,7 @@
 			isa = PBXProject;
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "RemoteEyeTracker" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,
@@ -1520,10 +1534,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E4C2421E10CC549C004149E2 /* openFrameworks.a */ = {
+		E4C2421E10CC549C004149E2 /* openFrameworksDebug.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = openFrameworks.a;
+			path = openFrameworksDebug.a;
 			remoteRef = E4C2421D10CC549C004149E2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1641,11 +1655,11 @@
 				E47FBD8A1269010300937867 /* timerButton.cpp in Sources */,
 				E47FBD8B1269010300937867 /* baseScene.cpp in Sources */,
 				E46962AB126A583300061A4A /* strokeToABB.cpp in Sources */,
-				E46962D7126AF32000061A4A /* ofxTCPClient.cpp in Sources */,
-				E46962D8126AF32000061A4A /* ofxTCPManager.cpp in Sources */,
-				E46962D9126AF32000061A4A /* ofxTCPServer.cpp in Sources */,
-				E46962DA126AF32000061A4A /* ofxUDPManager.cpp in Sources */,
 				E4327DC1126C7A86002075BE /* scribbleScene.cpp in Sources */,
+				E4CB0783126F091000AA2A5D /* ofxTCPClient.cpp in Sources */,
+				E4CB0784126F091000AA2A5D /* ofxTCPManager.cpp in Sources */,
+				E4CB0785126F091000AA2A5D /* ofxTCPServer.cpp in Sources */,
+				E4CB0786126F091000AA2A5D /* ofxUDPManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
