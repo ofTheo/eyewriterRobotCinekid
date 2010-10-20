@@ -78,6 +78,9 @@ void calibrationManager::stop(){
 //--------------------------------------------------------------
 void calibrationManager::update(){
 	
+	panel.hidden?ofHideCursor():ofShowCursor();
+	
+	
 	// TODO: rewrite the code to control calibration mode.
 	// bAuto--, bPre--- are not friendly to understand how it works.
 
@@ -260,13 +263,13 @@ void calibrationManager::draw(){
 
 	if (!bAutomatic && !bPreAutomatic){
 
-		if (!fitter.bBeenFit)	{
-			ofSetColor(255, 0, 0,127);
-			font.drawString("not calibrated", 100,100);
-		} else {
-			ofSetColor(0, 255, 0, 127);
-			font.drawString("calibrated", 100,100);
-		}
+//		if (!fitter.bBeenFit)	{
+//			ofSetColor(255, 0, 0,127);
+//			font.drawString("not calibrated", 100,100);
+//		} else {
+//			ofSetColor(0, 255, 0, 127);
+//			font.drawString("calibrated", 100,100);
+//		}
 	}
 
 	if (bPreAutomatic == true){

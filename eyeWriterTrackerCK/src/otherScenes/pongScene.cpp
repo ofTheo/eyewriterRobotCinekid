@@ -67,7 +67,7 @@ void pongScene::update(float mouseX, float mouseY){
 	
 	if (ballPoint.y > ofGetHeight()-60){
 		float diff = rectPoint.x - ballPoint.x;
-		if (fabs(diff) < 140/2){
+		if (fabs(diff) < 170/2){
 			ballPoint.y = ofGetHeight()-60;
 			ballVelocity.y *= -1;
 		}
@@ -76,7 +76,9 @@ void pongScene::update(float mouseX, float mouseY){
 	if (ballPoint.y > ofGetHeight()){
 		ballPoint.x = ofRandom(0,ofGetWidth());
 		ballPoint.y = 20;
-		ballVelocity.set(ofRandom(-5,5), ofRandom(2,9));		
+		ballVelocity.set(ofRandom(-5,5), ofRandom(2,9));
+		ballVelocity *= 1.9;
+		
 	}
 	
 	
@@ -93,7 +95,7 @@ void pongScene::draw(){
 	ofCircle(ballPoint.x, ballPoint.y, 50);
 	
 	ofSetRectMode(OF_RECTMODE_CENTER);
-	ofRect(rectPoint.x, rectPoint.y, 110, 20);
+	ofRect(rectPoint.x, rectPoint.y, 150, 20);
 	ofSetRectMode(OF_RECTMODE_CORNER);
 	
 		

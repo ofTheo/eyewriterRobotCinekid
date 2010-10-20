@@ -52,7 +52,8 @@ void eyeTracker::setup(int width, int height) {
 
 //----------------------------------------------------
 void eyeTracker::update(ofxCvGrayscaleImage & grayImgFromCam) {
-	
+
+
 	// initialize status, keep status for pupil & glint.
 	tState.bEyeFound = false;
 	tState.bGoodAlternation = false;
@@ -143,7 +144,9 @@ void eyeTracker::update(ofxCvGrayscaleImage & grayImgFromCam) {
 				}
 			}
 		}
-	}	
+	}else{
+		tState.bPupilFound =false;
+	}
 	//	cout << "bFoundOne: " << bFoundOne << "  bFoundPupil: " << bFoundPupil << " bFoundGlint: " << gFinder.bFound << endl;
 }
 

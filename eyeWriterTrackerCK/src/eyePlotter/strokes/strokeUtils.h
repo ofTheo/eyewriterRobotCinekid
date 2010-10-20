@@ -112,7 +112,7 @@ class strokeUtils{
 			
 			strokeGroups[i].shift(xDiff, yDiff);
 			
-			posX += bounding.width + letterSpacing * scaleAmnt;
+			posX += bounding.width + letterSpacing;
 			
 			if( strokeGroups[i].rightSpacing > 0.0 ){
 			

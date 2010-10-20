@@ -30,6 +30,8 @@ void typingScene::setup(){
 		"T", "U", "V", "W", "X", "Y", "Z"
 	};
 	
+	int buttonCount = 28;
+	
 	bSpeakWords = false;
 	
 	float xadd2 = 0;
@@ -111,7 +113,7 @@ void typingScene::setup(){
 	letterButtons.push_back(enterButton);
 	
 	buttonTrigger speakAllButton;
-	speakAllButton.setup("SEND TO ROBOT", 323+xadd - 230, 475+yadd+shiftY-10, bWidth*2+15, bHeight);
+	speakAllButton.setup("SEND TO ROBOT", 282+xadd - 230, 475+yadd+shiftY-10, bWidth*2+80, bHeight);
 	speakAllButton.setMaxCounter(buttonCount);
 	speakAllButton.setRetrigger(false);
 	letterButtons.push_back(speakAllButton);
@@ -238,6 +240,8 @@ void typingScene::update(float mouseX, float mouseY){
 					testApp * tApp = (testApp*)ofGetAppPtr();
 					tApp->eyeApp.drawScene.loadStringToRobot(displayMessage);
 					tApp->mode = MODE_DRAW;
+					displayMessage.clear();
+					carriageReturnCounter = 0;
 				}
 			}
 			
@@ -387,7 +391,10 @@ void typingScene::draw(){
 		}
 	}
 	
-	franklinBook.drawString(layedoutmessage, 30, 50);
+	float textX = 325;
+	float textY = 68;
+	
+	franklinBook.drawString(layedoutmessage, textX, textY);
 	
 	
 	vector <string> strings = ofSplitString(layedoutmessage, "\n");
@@ -395,8 +402,8 @@ void typingScene::draw(){
 	if(strings.size() > 1){
 		subMessage = strings[strings.size()-1];
 	}
-	float xx = franklinBook.getStringBoundingBox(subMessage + ".", 30, 50).x + franklinBook.getStringBoundingBox(subMessage+ ".", 30, 50).width;
-	float yy = franklinBook.getStringBoundingBox(layedoutmessage + ".", 30, 50).y + franklinBook.getStringBoundingBox(layedoutmessage+ ".", 30, 50).height;
+	float xx = franklinBook.getStringBoundingBox(subMessage + ".", textX, textY).x + franklinBook.getStringBoundingBox(subMessage+ ".", textX, textY).width;
+	float yy = franklinBook.getStringBoundingBox(layedoutmessage + ".", textX, textY).y + franklinBook.getStringBoundingBox(layedoutmessage+ ".", textX, textY).height;
 	
 	ofSetColor(127, 127, 127);
 	ofRect(xx, yy, 10,3);

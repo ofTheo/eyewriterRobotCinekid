@@ -145,7 +145,7 @@ void drawingScene::eventsIn(buttonNavEvent & event){
 	
 	if( e == "SEND_TO_ROBOT" ){
 		if( abbMode == ABB_DELAYED ){
-			manager.autoScaleGroups(ofRectangle(10, 10, ofGetWidth()-20, ofGetHeight()-20), 10);
+			manager.autoScaleGroups(ofRectangle(50, 110, ofGetWidth()-50, ofGetHeight()-150), 16);
 		}
 	
 		buttonNav * b = drawingNav.getButton("PAUSED");
@@ -285,6 +285,9 @@ void drawingScene::update(){
 	panel.update();
 	abb.update();
 	
+	panel.hidden?ofHideCursor():ofShowCursor();
+
+	
 	for(int k = 0; k < drawingNav.buttons.size(); k++){
 		drawingNav.buttons[k].setTriggerTime(panel.getValueF("buttonTime"));
 	}		
@@ -420,19 +423,21 @@ void drawingScene::draw(){
 		
 		ofPopStyle();
 		
-		ofPushStyle();
+		if(!panel.hidden){
+			ofPushStyle();
 
-			ofEnableAlphaBlending();
-			ofSetColor(200, 200, 200, 80);
+				ofEnableAlphaBlending();
+				ofSetColor(200, 200, 200, 80);
 
-			ofDrawBitmapString("Mode: " + ( abbMode == ABB_IMMEDIATE ? string("immediate") : string("delayed") ) , 15, drawingNav.bounds.height+20);
-			ofDrawBitmapString("Server Status: " + abb.getStateString() , 15, drawingNav.bounds.height+35);
+				ofDrawBitmapString("Mode: " + ( abbMode == ABB_IMMEDIATE ? string("immediate") : string("delayed") ) , 15, drawingNav.bounds.height+20);
+				ofDrawBitmapString("Server Status: " + abb.getStateString() , 15, drawingNav.bounds.height+35);
 
-			for(int k = 0; k < abb.msgHistory.size(); k++){
-				ofDrawBitmapString(abb.msgHistory[k], 15, drawingNav.bounds.height+50+18*k);
-			}
+				for(int k = 0; k < abb.msgHistory.size(); k++){
+					ofDrawBitmapString(abb.msgHistory[k], 15, drawingNav.bounds.height+50+18*k);
+				}
 
-		ofPopStyle();	
+			ofPopStyle();	
+		}
 
 	}else{
 		

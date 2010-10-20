@@ -46,11 +46,11 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
 
-//	ofBackground(70,70,70);
 	ofBackground(30,30,30);
 	
 	// update the tracking manager (and internally, its input manager)
 	TM.update();
+	
 	
 	// update the calibration manager
 	CM.update();
@@ -91,6 +91,7 @@ void testApp::update(){
 
 	
 	if (mode == MODE_TEST){
+		ofHideCursor();
 		ofPoint pt = eyeSmoothed;
 		if (BT.update(pt.x, pt.y)){
 			BT.x = ofRandom(100,ofGetWidth()-100);
@@ -99,6 +100,8 @@ void testApp::update(){
 	}
 	
 	if( mode == MODE_DRAW ){
+		ofHideCursor();
+
 		ofPoint pt = eyeSmoothed;
 		//if( ofGetElapsedTimef() - timeSince >= 1.0/8.0 ){
 
@@ -115,13 +118,21 @@ void testApp::update(){
 	}
 	
 	if (mode == MODE_TYPING){
+		ofHideCursor();
+
 		ofPoint pt = eyeSmoothed;
 		typeScene.update(pt.x, pt.y);
 	}
 	
 	if (mode == MODE_PONG){
+		ofHideCursor();
+
 		ofPoint pt = eyeSmoothed;
 		ponger.update(pt.x, pt.y);
+	}
+	
+	if(mode == MODE_TRACKING){
+		ofShowCursor();
 	}
 	
 }
