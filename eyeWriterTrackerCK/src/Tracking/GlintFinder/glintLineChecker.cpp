@@ -137,7 +137,7 @@ void glintLineChecker::draw(int x, int y){
 	ofSetColor(255, 0, 0, 80);
 
 	myStripesImage.draw(x, y);
-	linesFinder.draw(x,y);
+	//linesFinder.draw(x,y);
 
 	ofDisableAlphaBlending();
 }

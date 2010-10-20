@@ -69,6 +69,8 @@ public:
 	float			threshold_g;
 	float			minBlobSize_g;
 	float			maxBlobSize_g;
+	float blobSmoothingAmount;
+	int blobSmoothingSize;
 	
 	//Bright/Dark Threshold
 	bool				bFoundOne;

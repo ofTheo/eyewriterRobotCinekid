@@ -37,8 +37,51 @@ void glintFinder::setup(int eyeWidth, int eyeHeight, float _magRatio, float IMwi
 	
 }
 
+void glintFinder::smoothBlobs(vector<ofxCvBlob>& blobs, int smoothingSize, float smoothingAmount) {
+	for(int i = 0; i < blobs.size(); i++) {
+		// should precompute weightSum, weights, and total normalization
+		smoothBlob(blobs[i], smoothingSize, smoothingAmount);
+	}
+}
+
+void glintFinder::smoothBlob(ofxCvBlob& blob, int smoothingSize, float smoothingAmount) {
+	vector<ofPoint> ref = blob.pts;
+	vector<ofPoint>& cur = blob.pts;
+	int n = cur.size();
+	for(int i = 0; i < n; i++) {
+		cur[i].set(0, 0);
+		float weightSum = 0;
+		for(int j = 1; j <= smoothingSize; j++) {
+			int leftPosition = (n + i - j) % n;
+			int rightPosition = (i + j) % n;
+			ofPoint& left = ref[leftPosition];
+			ofPoint& right = ref[rightPosition];
+			
+			float weight = ofMap(j, 0, smoothingSize, 1, smoothingAmount);
+			weightSum += weight;
+			cur[i] += (left + right) * weight;
+		}
+		
+		ofPoint& center = ref[i];
+		cur[i] += center;
+		cur[i] /= 1 + 2 * weightSum;
+	}
+	
+	recomputeCentroid(blob);
+}
+
+void glintFinder::recomputeCentroid(ofxCvBlob& blob) {
+	vector<ofPoint>& pts = blob.pts;
+	int n = pts.size();
+	blob.centroid.set(0, 0);
+	for(int i = 0; i < n; i++) {
+		blob.centroid += pts[i];		
+	}
+	blob.centroid /= n;
+}
+
 //--------------------------------------------------------------------
-bool glintFinder::update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, float minBlobSize, float maxBlobSize, bool bUseBrightEyeCheck) {
+bool glintFinder::update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, float minBlobSize, float maxBlobSize, bool bUseBrightEyeCheck, int blobSmoothingSize, float blobSmoothingAmount) {
 	
 	bFound = false;
 		
@@ -64,7 +107,15 @@ bool glintFinder::update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, 
 	if (bFourGlints) nGlints = 4;
 	else nGlints = 2;
 	
-	contourFinder.findContours(eyeImage, minBlobSize, maxBlobSize, nGlints + 4, true, true);
+	bool willSmooth = (blobSmoothingAmount > 0);
+	// if blobSmoothing is on, we need to make sure we're not approximating the contour
+	// otherwise the contour points won't be evenly distributed for the smoothing pass
+	contourFinder.findContours(eyeImage, minBlobSize, maxBlobSize, nGlints + 4, true, !willSmooth);
+	
+	if(willSmooth) {
+		smoothBlobs(contourFinder.blobs, blobSmoothingSize, blobSmoothingAmount);
+	}
+	
 	eyeImage.resetROI();
 	
 	if (nGlints == 2){			// for now
@@ -237,7 +288,7 @@ void glintFinder::drawCross(ofPoint & pos, float x, float y, float width, float 
 void glintFinder::draw(float x, float y) {
 	
 	// ofTranslate didn't work well easily because of glScissor.
-		
+	
 	ofEnableAlphaBlending();
 	
 	ofSetColor(255,255,255);
@@ -258,7 +309,7 @@ void glintFinder::draw(float x, float y) {
 	
 	ofSetColor(255, 255, 255);
 	ofDrawBitmapString("glintFinder", x + 1, y + eyeImage.height + 12);
-	
+
 }
 
 //--------------------------------------------------------------------

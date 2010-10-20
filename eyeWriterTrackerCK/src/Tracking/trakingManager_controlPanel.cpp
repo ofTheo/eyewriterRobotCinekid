@@ -141,6 +141,8 @@ void trackingManager::setupGui(){
 	
 	panel.addSlider("min blob(glint)","MIN_BLOB_GLINT",5,0,2000,true);
 	panel.addSlider("max blob(glint)","MAX_BLOB_GLINT",500,0,20000,true);
+	panel.addSlider("blob smoothing size(glint)","GLINT_BLOB_SMOOTHING_SIZE",1,1,10,true);
+	panel.addSlider("blob smoothing amount(glint)","GLINT_BLOB_SMOOTHING_AMOUNT",0,0,1,false);
 	
 	panel.addToggle("draw line(pupil)", "B_DRAW_LINE_P", true);
 	panel.addToggle("draw line(glint)", "B_DRAW_LINE_G", true);
@@ -290,6 +292,8 @@ void trackingManager::updateGui(){
 	tracker.threshold_g_frompanel	= panel.getValueF("THRESHOLD_GLINT");
 	tracker.minBlobSize_g			= panel.getValueF("MIN_BLOB_GLINT");
 	tracker.maxBlobSize_g			= panel.getValueF("MAX_BLOB_GLINT");
+	tracker.blobSmoothingSize = panel.getValueI("GLINT_BLOB_SMOOTHING_SIZE");
+	tracker.blobSmoothingAmount = panel.getValueF("GLINT_BLOB_SMOOTHING_AMOUNT");
 	
 	tracker.gFinder.pctGlintROIorigin.x = panel.getValueF("ROI_ORIGIN_X");
 	tracker.gFinder.pctGlintROIorigin.y = panel.getValueF("ROI_ORIGIN_Y");
