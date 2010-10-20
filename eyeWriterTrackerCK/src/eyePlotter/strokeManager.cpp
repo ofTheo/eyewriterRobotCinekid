@@ -36,7 +36,19 @@ void strokeManager::undoLastPoint(){
 			stroke & s = group.back().strokes.back();
 			s.undo();
 		}
+		if( group.size() ){
+			if( group.back().strokes.size() && !group.back().strokes.back().hasPoints() ){
+				group.back().strokes.pop_back();
+			}
+			if( group.back().strokes.size() == 0 ){
+				group.pop_back();
+			} 	
+		}
 		sendEvent("undo");	
+		tmpCpy = group.getVectorCopy();
+		if( tmpCpy.size() ){
+			tmpCpy.pop_back();
+		}	
 	}
 }
 

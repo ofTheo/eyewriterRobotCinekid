@@ -40,6 +40,8 @@ class strokeToABB{
 			port   = 1200;
 			endChar= -1;
 
+			serverWaitTime = 0;
+
 			bDrawingStarted = false;
 			bIsUp			= true;
 			state			= ABB_SERVER_WAITING;
@@ -70,6 +72,7 @@ class strokeToABB{
 				state  = ABB_SERVER_SETUP;
 			}else{
 				state  = ABB_SERVER_ERROR_BINDING_TO_PORT;
+				serverWaitTime = ofGetElapsedTimef() + 5.0;
 			}
 
 			bDrawingStarted = false;
@@ -85,8 +88,17 @@ class strokeToABB{
 		}
 
 		void update(){
-			if( state == ABB_SERVER_SETUP && tcpServer.getNumClients() ){
+			if( state == ABB_SERVER_SETUP && tcpServer.getNumClients() > 0 ){
+				printf("num clients is %i\n", tcpServer.getNumClients() );
 				state = ABB_SERVER_CLIENT_CONNECTED;
+			}
+			 
+			if( state == ABB_SERVER_ERROR_BINDING_TO_PORT && ofGetElapsedTimef() > serverWaitTime ){
+				if( tcpServer.setup(port, false) ){
+					state = ABB_SERVER_SETUP;
+				}else{
+					serverWaitTime = ofGetElapsedTimef() + 5.0;				
+				}
 			}
 		}
 
@@ -188,6 +200,8 @@ class strokeToABB{
 							
 			}
 		}
+
+		float serverWaitTime;
 
 		char sendData[16];
 

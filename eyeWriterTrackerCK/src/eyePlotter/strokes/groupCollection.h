@@ -37,6 +37,12 @@ class groupCollection{
 	unsigned int size(){
 		return groups.size();
 	}
+	
+	void pop_back(){
+		if( groups.size() ){
+			groups.pop_back();
+		}
+	}
 
 	//--------------------------------
 	strokeGroup & back(){

@@ -15,6 +15,11 @@ void buttonNav::setup( ofEvent <buttonNavEvent> & navEventIn ){
 }
 
 //------------------------------------------------------
+void buttonNav::setTriggerTime(float time){
+	triggerTime = time;
+}
+
+//------------------------------------------------------
 void buttonNav::update( float x, float y, int pressed){
 	
 	bool doFade = false;

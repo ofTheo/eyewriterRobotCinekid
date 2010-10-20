@@ -16,7 +16,7 @@
         <defaultTrigger>0.75</defaultTrigger>
 
 		<button>	
-			<spacing>120</spacing>
+			<spacing>45</spacing>
 			<state>
 				<title>PAUSED</title>
                 <img>paused.png</img>
@@ -29,7 +29,7 @@
 
 		<button>	
             <repeatTime>0.4</repeatTime>
-			<spacing>70</spacing>
+			<spacing>45</spacing>
 			<state>
 				<title>UNDO_DRAW</title>
 				<text>UNDO</text>
@@ -38,7 +38,17 @@
 		</button>
 
 		<button>	
-			<spacing>140</spacing>
+			<spacing>45</spacing>
+			<state>
+				<title>NEW_STROKE</title>
+				<text>NEW STROKE</text>
+                <img>newStroke.png</img>
+			</state>
+		</button>
+
+
+		<button>	
+			<spacing>45</spacing>
 			<state>
 				<title>NEW_SHAPE</title>
 				<text>NEW SHAPE</text>
@@ -47,7 +57,7 @@
 		</button>
 
 		<button>	
-			<spacing>120</spacing>
+			<spacing>45</spacing>
 			<state>
 				<title>SEND_TO_ROBOT</title>
                 <img>toRobot.png</img>

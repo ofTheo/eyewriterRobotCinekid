@@ -4,6 +4,7 @@
 
 int buttonCount = 22;
 float smoothAmnt = 0.09;
+int NUM_MODES = 6;
 
 //--------------------------------------------------------------
 testApp::testApp(){
@@ -98,10 +99,12 @@ void testApp::update(){
 	if( mode == MODE_DRAW ){
 		ofPoint pt = eyeSmoothed;
 		//if( ofGetElapsedTimef() - timeSince >= 1.0/8.0 ){
+
+			eyeApp.update();
 			
 			//To test with mouse comment this line and uncomment the line below
 			//if( TM.bGotAnEyeThisFrame() || bMouseSimulation ){
-				eyeApp.update( pt.x, pt.y, 1.0);
+				eyeApp.updatePoint( pt.x, pt.y, 1.0);
 			//}
 			//eyeApp.update( mouseX, mouseY );
 			
@@ -198,10 +201,25 @@ void testApp::keyPressed(int key){
 	
 	switch (key){
 			
+		case	OF_KEY_LEFT:
+			mode --;
+			if( mode < 0 ){
+				mode = NUM_MODES-1;
+			}
+			if( mode == MODE_DRAW ){
+				eyeApp.drawScene.clearOffset();
+			}			
+		break;
+		
+		case	OF_KEY_RIGHT:
 		case	OF_KEY_RETURN:
 		case	'@':
 			mode ++;
-			mode %= 6; // number of modes;
+			mode %= NUM_MODES; // number of modes;
+			
+			if( mode == MODE_DRAW ){
+				eyeApp.drawScene.clearOffset();
+			}
 			break;
 			
 		case	'm':
@@ -239,6 +257,10 @@ void testApp::keyPressed(int key){
 			
 	}
 	
+	if( mode == MODE_DRAW ){
+		eyeApp.keyPressed(key);
+	}	
+	
 	if (mode == MODE_CALIBRATING){
 		CM.keyPressed(key);
 	}
@@ -259,6 +281,7 @@ void testApp::mouseDragged(int x, int y, int button){
 	
 	if (mode == MODE_TRACKING)			TM.mouseDragged(x, y, button);
 	if (mode == MODE_CALIBRATING)		CM.mouseDragged(x, y, button);
+	if (mode == MODE_DRAW)				eyeApp.mouseDragged(x, y, button);	
 
 }
 
@@ -268,6 +291,7 @@ void testApp::mousePressed(int x, int y, int button){
 	
 	if (mode == MODE_TRACKING)			TM.mousePressed(x, y, button);
 	if (mode == MODE_CALIBRATING)		CM.mousePressed(x, y, button);
+	if (mode == MODE_DRAW)				eyeApp.mousePressed(x, y, button);
 
 
 }
@@ -277,6 +301,7 @@ void testApp::mouseReleased(int x, int y, int button){
 	
 	if (mode == MODE_TRACKING)			TM.mouseReleased();
 	if (mode == MODE_CALIBRATING)		CM.mouseReleased(x,y,button);
+	if (mode == MODE_DRAW)				eyeApp.mouseReleased(x, y, button);
 
 }
 

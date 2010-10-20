@@ -48,6 +48,8 @@ class buttonNav{
 		void update( float x, float y, int pressed);		
 		void draw();
 		
+		void setTriggerTime(float time);
+		
 		void show();
 		void hide();
 		void enable();

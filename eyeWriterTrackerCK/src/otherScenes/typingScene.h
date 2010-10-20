@@ -54,6 +54,8 @@ public:
 	ofTrueTypeFont  franklinBookLarge;
 	bool shiftOn;
 	
+	float yadd2;
+	
 private:
 	void typedMessage(string msg);
 	

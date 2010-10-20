@@ -23,9 +23,8 @@ void typingScene::setup(){
 	ofBackground(255, 255, 255);
 	shiftOn = false;
 	
-	string buttons[36] = 
-	{"!\n1", "@\n2", "#\n3", "$\n4", "%\n5", "^\n6", "&\n7", "*\n8", "(\n9", ")\n0", 
-		"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 
+	string buttons[26] = 
+	{ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 
 		"K", "L", "M", "N", "O", "P", "Q", "R", "S", 
 		"T", "U", "V", "W", "X", "Y", "Z"
 	};
@@ -33,15 +32,15 @@ void typingScene::setup(){
 	bSpeakWords = false;
 	
 	float xadd2 = 0;
-	float yadd2 = 200;
 	
+	yadd2 = 130;
 	
-	float xStart  = 15;
+	float xStart  = 45;
 	float yStart  = 15;
 	float bWidth  = 100;
 	float bHeight = 100;
 	
-	for (int i = 0; i < 36; i++){
+	for (int i = 0; i < 26; i++){
 		buttonTrigger nButton;
 		nButton.setup(buttons[i], xStart + xadd2, yStart + yadd2, bWidth, bHeight);
 		nButton.setMaxCounter(buttonCount);
@@ -49,9 +48,9 @@ void typingScene::setup(){
 		letterButtons.push_back(nButton);
 		
 		xStart += 120;
-		if (xStart > 1100){
+		if (xStart > 900 ){
 			//if (xStart > 900){
-			xStart = 90;
+			xStart = 45;
 			yStart += 120;
 		}
 		
@@ -101,55 +100,45 @@ void typingScene::setup(){
 //	deleteButton.setRetrigger(true);
 //	letterButtons.push_back(deleteButton);
 	
+	float shiftX = 100;
+	float shiftY = -80;
 	
 	buttonTrigger enterButton;
-	enterButton.setup("DELETE", 195+xadd, 475+yadd, bWidth*2+15, bHeight);
+	enterButton.setup("DELETE", xadd + 400, 345+yadd+shiftY, bWidth*2+15, bHeight);
 	enterButton.setMaxCounter(buttonCount);
 	enterButton.setRetrigger(true);
 	letterButtons.push_back(enterButton);
 	
 	buttonTrigger speakAllButton;
-	speakAllButton.setup("SPEAK", 15+xadd - 200, 475+yadd, bWidth*2+15, bHeight);
+	speakAllButton.setup("SPEAK", 323+xadd - 230, 475+yadd+shiftY-10, bWidth*2+15, bHeight);
 	speakAllButton.setMaxCounter(buttonCount);
 	speakAllButton.setRetrigger(false);
 	letterButtons.push_back(speakAllButton);
 	
 	
 	buttonTrigger clearButton;
-	clearButton.setup("CLEAR ALL", 15+xadd, 475+yadd, bWidth*2+15, bHeight);
+	clearButton.setup("CLEAR ALL", xadd + 400, 475+yadd+shiftY-10, bWidth*2+15, bHeight);
 	clearButton.setMaxCounter(buttonCount);
 	clearButton.setRetrigger(false);
 	letterButtons.push_back(clearButton);
 	
 	buttonTrigger spaceButton;
-	spaceButton.setup("SPACE", 375+xadd, 475+yadd, bWidth*4.5+7, bHeight);
+	spaceButton.setup("SPACE", xadd, 345+yadd+shiftY, bWidth*4.5+7, bHeight);
 	spaceButton.setMaxCounter(buttonCount);
 	spaceButton.setRetrigger(false);
 	letterButtons.push_back(spaceButton);
 	
-	buttonToggle capsButton;
-	capsButton.setup("CAPS ON", "CAPS OFF", false, 800+xadd+100, 475+yadd, bWidth+15, bHeight);
-	capsButton.setMaxCounter(buttonCount);
-	actionButtons.push_back(capsButton);
+//	buttonToggle capsButton;
+//	capsButton.setup("CAPS ON", "CAPS OFF", false, 800+xadd+100, 475+yadd, bWidth+15, bHeight);
+//	capsButton.setMaxCounter(buttonCount);
+//	actionButtons.push_back(capsButton);
+//	
+//	
+//	buttonToggle speakButton;
+//	speakButton.setup("SPEAK\nWORDS\nON", "SPEAK\nWORDS\nOFF", false, 800+xadd+100, 175+yadd, bWidth+15, bHeight);
+//	speakButton.setMaxCounter(buttonCount);
+//	actionButtons.push_back(speakButton);
 	
-	
-	buttonToggle speakButton;
-	speakButton.setup("SPEAK\nWORDS\nON", "SPEAK\nWORDS\nOFF", false, 800+xadd+100, 175+yadd, bWidth+15, bHeight);
-	speakButton.setMaxCounter(buttonCount);
-	actionButtons.push_back(speakButton);
-	
-	
-	//
-	letterButtons_lower.push_back("1");
-	letterButtons_lower.push_back("2");
-	letterButtons_lower.push_back("3");
-	letterButtons_lower.push_back("4");
-	letterButtons_lower.push_back("5");
-	letterButtons_lower.push_back("6");
-	letterButtons_lower.push_back("7");
-	letterButtons_lower.push_back("8");
-	letterButtons_lower.push_back("9");
-	letterButtons_lower.push_back("0");
 	
 	letterButtons_lower.push_back("a");
 	letterButtons_lower.push_back("b");
@@ -374,8 +363,7 @@ void typingScene::draw(){
 	//float remainY = (height - textHeight)/2.0f + (textHeight/2.0f);
 	ofFill();
 	ofSetColor(0,0,0);
-	ofRect(0,0,ofGetWidth(), 200);
-	
+	ofRect(0,0,ofGetWidth(), yadd2);
 	
 	ofSetColor(255,255,255);
 	//ofDrawBitmapString(displayMessage, 200, 600);

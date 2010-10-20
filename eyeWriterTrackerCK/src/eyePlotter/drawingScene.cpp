@@ -66,6 +66,15 @@ void drawingScene::setup(float x, float y, float w, float h){
     abb.setEndChar(endChar);	
 	
 	// --
+
+	panel.setup("drawing settings", ofGetWidth()-260, 140, 260, 500);
+	panel.addPanel("settings", 1, false);
+	panel.addSlider("pointToRobotSpeed", "pointToRobotSpeed", 0.4, 0.01, 3.0, false);
+	panel.addSlider("pointPlaceThresh", "pointPlaceThresh", 9, 2, 30, false);
+	panel.addSlider("pointPlaceTime", "pointPlaceTime", 0.8, 0.2, 1.8, false);
+	panel.addSlider("buttonTime", "buttonTime", 0.75, 0.2, 1.8, false);
+	panel.loadSettings("Settings/drawingSettings.xml");
+	panel.hide();
 }
 
 //------------------------------------------------------------------------
@@ -214,14 +223,66 @@ void drawingScene::sendLetterToRobot(strokeGroup & g, int sleepTime){
 }
 
 //------------------------------------------------------------------------
-void drawingScene::update(float mx, float my){
-	abb.update();
+void drawingScene::clearOffset(){
+	offset = 0;
+}
+
+//------------------------------------------------------------------------
+void drawingScene::updatePoint(float mx, float my){
 
 	current.set(mx, my);
+	
+	timer.update(current.x, current.y);
+	drawingNav.update(current.x, current.y, true);
+	
+	bInsideNav = drawingNav.bounds.inside(current.x, current.y) && bounds.inside(current.x, current.y) && current.y < drawingNav.bounds.height && current.y > 0;
+	
+	ofRectangle drawArea = ofRectangle(bounds.x, bounds.y + drawingNav.bounds.height, bounds.width, bounds.height-drawingNav.bounds.height);
+	bInsideDrawingArea = drawArea.inside(current.x, current.y);
+	
+	if( bInsideDrawingArea && !bPaused ){
+		if( timer.isPointStationary( panel.getValueF("pointPlaceThresh") ) ){
+			manager.addPoint(current.x, current.y);
+			
+			lastPoint = current;
+			
+			if( abbMode == ABB_IMMEDIATE ){
+				if( !abb.bDrawingStarted ){
+					abb.startDrawingAtPoint(lastPoint.x/bounds.width, lastPoint.y/bounds.height);
+				}else{
+					abb.moveDown(lastPoint.x/bounds.width, lastPoint.y/bounds.height);
+				}
+			}
+		}
+	}	
+	
+	if( bOffsetCheck ){
+	
+		if( ofGetElapsedTimef() >= offsetCheckTill ){
+			offset /= numCheck;
+			bOffsetCheck = false;
+		}else if( ofGetElapsedTimef() >= offsetCheckTill - 0.7){
+			offset += ofPoint(ofGetWidth()/2, ofGetHeight()/2) - current;
+			numCheck++;
+		}
+	}
+	
+}
+
+//------------------------------------------------------------------------
+void drawingScene::update(){
+	panel.update();
+	abb.update();
+	
+	for(int k = 0; k < drawingNav.buttons.size(); k++){
+		drawingNav.buttons[k].setTriggerTime(panel.getValueF("buttonTime"));
+	}		
+
+	timer.setWaitTime(panel.getValueF("pointPlaceTime"));
 
 	if( bSendingToRobot ){
 		
-		if( ofGetElapsedTimef() - timeStarted > (float)currentPoint ){
+		if( ofGetElapsedTimef() - timeStarted > (float)currentPoint * panel.getValueF("pointToRobotSpeed") ){
 		
 			bool bFirst = false;
 			bool bLast  = false;
@@ -272,43 +333,6 @@ void drawingScene::update(float mx, float my){
 		
 	}
 
-	if( bOffsetCheck ){
-	
-		if( ofGetElapsedTimef() >= offsetCheckTill ){
-			offset /= numCheck;
-			bOffsetCheck = false;
-		}else if( ofGetElapsedTimef() >= offsetCheckTill - 0.7){
-			offset += ofPoint(ofGetWidth()/2, ofGetHeight()/2) - current;
-			numCheck++;
-		}
-	}
-	
-	printf("current.y is %f\n", current.y);
-	
-	timer.update(current.x, current.y);
-	drawingNav.update(current.x, current.y, true);
-	
-	bInsideNav = drawingNav.bounds.inside(current.x, current.y) && bounds.inside(current.x, current.y) && current.y < drawingNav.bounds.height && current.y > 0;
-	
-	ofRectangle drawArea = ofRectangle(bounds.x, bounds.y + drawingNav.bounds.height, bounds.width, bounds.height-drawingNav.bounds.height);
-	bInsideDrawingArea = drawArea.inside(current.x, current.y);
-	
-	if( bInsideDrawingArea && !bPaused ){
-		if( timer.isPointStationary(9) ){
-			manager.addPoint(current.x, current.y);
-			
-			lastPoint = current;
-			
-			if( abbMode == ABB_IMMEDIATE ){
-				if( !abb.bDrawingStarted ){
-					abb.startDrawingAtPoint(lastPoint.x/bounds.width, lastPoint.y/bounds.height);
-				}else{
-					abb.moveDown(lastPoint.x/bounds.width, lastPoint.y/bounds.height);
-				}
-			}
-		}
-		//draw here
-	}	
 	
 }
 
@@ -351,34 +375,39 @@ void drawingScene::draw(){
 			manager.drawGuideLine(current.x, current.y);
 		}	
 
-		if( bSendingToRobot ){
-		
-			ofEnableAlphaBlending();
-			ofSetColor(240, 240, 240, 30);
-			manager.drawAllShapes();
+		ofPushStyle();
+			ofSetLineWidth(4.0);
+
+			if( bSendingToRobot ){
 			
-			ofSetColor(240, 240, 240, 200);			
-			manager.drawAllShapesUpToPoint(currentPoint);
-		
-		}else if(  bSentToRobot ){
-		
-			ofEnableAlphaBlending();
-			ofSetColor(240, 240, 240, 200);
-			manager.drawAllShapes();
-					
-		}else{
-			ofPushStyle();
-				ofSetColor(240, 240, 240);
-				manager.drawCurrentShape();
-				
 				ofEnableAlphaBlending();
-				ofSetColor(240, 240, 240, 60);
-				ofRectangle bRect = ofRectangle(10, 130, ofGetWidth()-20, 140);
-				manager.drawAllShapesInRect(bRect);
-				ofNoFill();
-				//ofRect(bRect.x, bRect.y, bRect.width, bRect.height);
-			ofPopStyle();
-		}
+				ofSetColor(240, 240, 240, 30);
+				manager.drawAllShapes();
+				
+				ofSetColor(240, 240, 240, 200);			
+				manager.drawAllShapesUpToPoint(currentPoint);
+			
+			}else if(  bSentToRobot ){
+			
+				ofEnableAlphaBlending();
+				ofSetColor(240, 240, 240, 200);
+				manager.drawAllShapes();
+						
+			}else{
+				ofPushStyle();
+					ofSetColor(240, 240, 240);
+					manager.drawCurrentShape();
+					
+					ofEnableAlphaBlending();
+					ofSetColor(240, 240, 240, 60);
+					ofRectangle bRect = ofRectangle(10, 130, ofGetWidth()-20, 140);
+					manager.drawAllShapesInRect(bRect);
+					ofNoFill();
+					//ofRect(bRect.x, bRect.y, bRect.width, bRect.height);
+				ofPopStyle();
+			}
+		
+		ofPopStyle();
 		
 		ofPushStyle();
 
@@ -402,4 +431,24 @@ void drawingScene::draw(){
 	}
 	
 	drawingNav.draw();
+	panel.draw();
+}
+
+
+void drawingScene::mouseDragged(int x, int y, int button){
+	panel.mouseDragged(x, y, button);
+}
+
+void drawingScene::mousePressed(int x, int y, int button){
+	panel.mousePressed(x, y, button);
+}
+
+void drawingScene::mouseReleased(int x, int y, int button){
+	panel.mouseReleased();
+}
+
+void drawingScene::keyPressed(int key){
+	if( key == 'D' ){
+		panel.toggleView();
+	}
 }

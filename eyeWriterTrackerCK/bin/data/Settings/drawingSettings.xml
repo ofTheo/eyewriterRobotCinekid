@@ -1,0 +1,12 @@
+<pointToRobotSpeed>
+    <val_0>0.400000</val_0>
+</pointToRobotSpeed>
+<pointPlaceThresh>
+    <val_0>12.577778</val_0>
+</pointPlaceThresh>
+<pointPlaceTime>
+    <val_0>0.697778</val_0>
+</pointPlaceTime>
+<buttonTime>
+    <val_0>0.404444</val_0>
+</buttonTime>

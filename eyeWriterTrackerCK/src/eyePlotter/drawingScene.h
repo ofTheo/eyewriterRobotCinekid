@@ -12,6 +12,7 @@
 #include "strokeManager.h"
 #include "eyeTimer.h"
 #include "strokeToABB.h"
+#include "ofxControlPanel.h"
 
 class drawingScene{
 	public:
@@ -24,9 +25,19 @@ class drawingScene{
 		
 		void sendLetterToRobot(strokeGroup & g, int sleepTime);		
 
+		void clearOffset();
+
 		void setup(float x, float y, float w, float h);
-		void update(float x, float y);
+		
+		void updatePoint(float mx, float my);		
+		void update();
 		void draw();
+		
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
+		void keyPressed(int key);
+		
 		
 		void checkOffset();
 		bool bOffsetCheck;
@@ -36,6 +47,8 @@ class drawingScene{
 		
 		ofColor bgColor;
 		ofRectangle bounds;
+		
+		ofxControlPanel panel;
 		
 		strokeToABB abb;
 		serverMode abbMode;		
