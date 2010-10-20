@@ -33,6 +33,8 @@ void calibrationManager::setup(){
 	calibrationRectangle.height = 768;
 
 	setupControlPanel();
+	panel.hide();
+	
 	fitter.setup(nDivisionsWidth, nDivisionsHeight);
 	
 	int total = nDivisionsWidth * nDivisionsHeight;
@@ -54,6 +56,7 @@ void calibrationManager::start(){
 	bAutomatic = true;
 	bAmInAutodrive = true;
 	startTime = ofGetElapsedTimef();
+	menuEnergy = 1;	
 	
 	random_shuffle(randomOrder.begin(), randomOrder.end());
 	
@@ -318,6 +321,10 @@ void calibrationManager::keyPressed(int key) {
 	}else if (key == ' '){
 		clear();
 		stop();
+	}
+	
+	if(key == 'D' ){
+		panel.toggleView();
 	}
 }
 

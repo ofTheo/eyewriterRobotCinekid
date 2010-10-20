@@ -165,8 +165,8 @@ void testApp::draw(){
 		ofDisableAlphaBlending();
 	}
 	
-	ofSetColor(255, 255, 255);
-	ofDrawBitmapString("FrameRate: " + ofToString(ofGetFrameRate(), 5), 1, ofGetHeight() - 20);
+	//ofSetColor(255, 255, 255);
+	//ofDrawBitmapString("FrameRate: " + ofToString(ofGetFrameRate(), 5), 1, ofGetHeight() - 20);
 
 }
 
