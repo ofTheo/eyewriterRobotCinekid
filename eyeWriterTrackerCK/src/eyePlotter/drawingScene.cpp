@@ -73,6 +73,7 @@ void drawingScene::setup(float x, float y, float w, float h){
 	panel.addSlider("pointPlaceThresh", "pointPlaceThresh", 9, 2, 30, false);
 	panel.addSlider("pointPlaceTime", "pointPlaceTime", 0.8, 0.2, 1.8, false);
 	panel.addSlider("buttonTime", "buttonTime", 0.75, 0.2, 1.8, false);
+	panel.addToggle("robotSig", "robotSig", false);
 	panel.loadSettings("Settings/drawingSettings.xml");
 	panel.hide();
 }
@@ -145,7 +146,55 @@ void drawingScene::eventsIn(buttonNavEvent & event){
 	
 	if( e == "SEND_TO_ROBOT" ){
 		if( abbMode == ABB_DELAYED ){
-			manager.autoScaleGroups(ofRectangle(50, 110, ofGetWidth()-50, ofGetHeight()-150), 16);
+			manager.autoScaleGroups(ofRectangle(50, 110, ofGetWidth()-100, ofGetHeight()-170), 16);
+		
+			if( panel.getValueB("robotSig") ){
+			
+				float blX = 0.965;
+				float blY = 0.965;
+				
+				vector <ofPoint> e;
+				e.push_back(ofPoint(5, 0));
+				e.push_back(ofPoint(0, 0));
+				e.push_back(ofPoint(0, 3));
+				e.push_back(ofPoint(5, 3));
+				e.push_back(ofPoint(0, 8));
+				e.push_back(ofPoint(2.5, 8.5));
+				e.push_back(ofPoint(5, 8));
+
+				vector <ofPoint> w;
+				w.push_back(ofPoint(7, 0));
+				w.push_back(ofPoint(7, 8));
+				w.push_back(ofPoint(9, 0));
+				w.push_back(ofPoint(9, 8));
+				w.push_back(ofPoint(11, 8.5));
+				w.push_back(ofPoint(13, 8));
+				w.push_back(ofPoint(13, 0));
+				
+				manager.newShape();
+				
+				float sx = 0.06;
+				float sy = 0.06;
+				
+				for(int k = 0; k < e.size(); k++){
+					
+					float x = (blX - sx) + (e[k].x / 13.0) * sx;
+					float y = (blY - sy) + (e[k].y / 8.5)  * sy;
+					
+					manager.addPoint(x * bounds.width, y * bounds.height);
+				}
+
+				manager.newStroke();
+
+				for(int k = 0; k < w.size(); k++){
+					float x = (blX - sx) + (w[k].x / 13.0) * sx;
+					float y = (blY - sy) + (w[k].y / 8.5)  * sy;
+					
+					manager.addPoint(x * bounds.width, y * bounds.height);				
+				}	
+					
+			}
+			
 		}
 	
 		buttonNav * b = drawingNav.getButton("PAUSED");
@@ -157,6 +206,7 @@ void drawingScene::eventsIn(buttonNavEvent & event){
 			b->disable();
 			bSendingToRobot = true;
 			timeStarted = ofGetElapsedTimef();
+			timeForNextPoint = ofGetElapsedTimef() + panel.getValueF("pointToRobotSpeed");
 			currentPoint = 0;
 			targetPoint  = 0;
 			
@@ -296,7 +346,14 @@ void drawingScene::update(){
 
 	if( bSendingToRobot ){
 		
-		if( ofGetElapsedTimef() - timeStarted > (float)currentPoint * panel.getValueF("pointToRobotSpeed") ){
+		
+		float pointSpeed = panel.getValueF("pointToRobotSpeed");
+		
+		if( panel.getValueB("robotSig") && targetPoint - currentPoint <= 14 ){
+			pointSpeed *= 0.45;
+		}
+		
+		if( ofGetElapsedTimef() >= timeForNextPoint ){
 		
 			bool bFirst = false;
 			bool bLast  = false;
@@ -313,6 +370,7 @@ void drawingScene::update(){
 				abb.moveUp(pt.x/bounds.width, pt.y/bounds.height);			
 			}
 			
+			timeForNextPoint = ofGetElapsedTimef() + pointSpeed;
 			currentPoint++;
 		}
 				

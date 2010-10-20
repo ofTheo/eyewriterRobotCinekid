@@ -57,6 +57,7 @@ class drawingScene{
 		strokeToABB abb;
 		serverMode abbMode;		
 		ofPoint lastPoint;
+		float timeForNextPoint;
 		bool bSendingToRobot;
 		int currentPoint;
 		int targetPoint;
