@@ -17,6 +17,8 @@ void testApp::setup(){
 	
 	//---- setup standard application settings
 	
+	ofSetFullscreen(true);
+	
 	//	ofSetVerticalSync(true);  
 	
 	mode = MODE_TRACKING;

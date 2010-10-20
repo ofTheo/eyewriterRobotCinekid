@@ -17,7 +17,7 @@ public:
 	void		drawLine(float x, float y, float width, float height, float len);
 	void		drawLineOnBrightGlint(float x, float y, float width, float height, float len);
 	void		draw(float x, float y);
-	void		findGlintCandidates(ofxCvGrayscaleAdvanced & eyeImg, float _threshold, float minBlobSize, float maxBlobSize, bool isBrightEye);
+	bool		findGlintCandidates(ofxCvGrayscaleAdvanced & eyeImg, float _threshold, float minBlobSize, float maxBlobSize, bool isBrightEye);
 	ofPoint		getGlintPosition(int glintID);
 	
 	void smoothBlobs(vector<ofxCvBlob>& blobs, int smoothingSize, float smoothingAmount);

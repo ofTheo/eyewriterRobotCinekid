@@ -234,13 +234,18 @@ bool glintFinder::update(ofxCvGrayscaleAdvanced & blackEyeImg, float threshold, 
 }
 
 //--------------------------------------------------------------------
-void glintFinder::findGlintCandidates(ofxCvGrayscaleAdvanced & eyeImg, float _threshold, float minBlobSize, float maxBlobSize, bool isBrightEye){
+bool glintFinder::findGlintCandidates(ofxCvGrayscaleAdvanced & eyeImg, float _threshold, float minBlobSize, float maxBlobSize, bool isBrightEye){
 
 	if (isBrightEye){
+		int nFound;
 		eyeImg.threshold(_threshold, false);
-		contourFinderBright.findContours(eyeImg, minBlobSize, maxBlobSize, 3, true, true);
+		nFound = contourFinderBright.findContours(eyeImg, minBlobSize, maxBlobSize, 3, true, true);
 		checkBrightEye = eyeImg;
+		if (nFound > 0) return true;
+		else return false;
 	}
+	
+	return false;
 }
 
 //--------------------------------------------------------------------

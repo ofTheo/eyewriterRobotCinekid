@@ -6,6 +6,7 @@
 void trackingManager::setupGui(){
 	
 	panel.setup("cv panel", 1024-270, 10, 270, 820);
+	panel.addPanel("main tracking settings", 1, false);
 	panel.addPanel("image adjustment", 1, false);
 	//	panel.addPanel("edge fixer", 1, false);
 	panel.addPanel("eye detection 1", 1, false);
@@ -18,8 +19,7 @@ void trackingManager::setupGui(){
 	
 	
 	//---- image ---
-	panel.setWhichPanel("image adjustment");
-	panel.setWhichColumn(0);
+	panel.setWhichPanel("main tracking settings");
 	
 	if (IM.mode == INPUT_VIDEO){
 		panel.addSlider("video speed", "VIDEOSPEED", 1, 0, 2, false);
@@ -30,7 +30,31 @@ void trackingManager::setupGui(){
 	
 	panel.addToggle("Focus Screen", "B_FOCUS_SCREEN", false);
 	
-	panel.addSlider("threshold(eye)", "THRESHOLD_EYEPOS", 60, 0, 255, true);
+	panel.addSlider("threshold(eye)", "THRESHOLD_EYEPOS", 60, 0, 255, true);	
+	
+	vector <guiVariablePointer> vars;
+	
+	typedef struct {
+		bool bEyeFound;
+		bool bGoodAlternation;
+		bool bGlintInBrightEyeFound;
+		bool bGlintInDarkEyeFound;
+		bool bPupilFound;
+	} trackingState;
+
+	
+	vars.push_back(guiVariablePointer("EYE FOUND", &tracker.tState.bEyeFound, GUI_VAR_BOOL));
+	vars.push_back(guiVariablePointer("GOOD EYE STROBE", &tracker.tState.bEyeFound, GUI_VAR_BOOL));
+	vars.push_back(guiVariablePointer("BRIGHT GLINT FOUND", &tracker.tState.bGlintInBrightEyeFound, GUI_VAR_BOOL));
+	vars.push_back(guiVariablePointer("DARK GLINT FOUND", &tracker.tState.bGlintInDarkEyeFound, GUI_VAR_BOOL));
+	vars.push_back(guiVariablePointer("PUPIL FOUND", &tracker.tState.bPupilFound, GUI_VAR_BOOL));
+	
+	panel.addVariableLister("tracking state", vars);
+	
+	
+	panel.setWhichPanel("image adjustment");
+	panel.setWhichColumn(0);
+
 	panel.addSlider("threshold(pupil)", "THRESHOLD_PUPIL", 60, 0, 255, true);
 	panel.addSlider("threshold(glint)", "THRESHOLD_GLINT", 190, 0, 255, true);
 	panel.addToggle("auto threshold(pupil)", "B_USE_AUTOTHRESHOLD_PUPIL", true);
@@ -47,7 +71,6 @@ void trackingManager::setupGui(){
 	panel.addToggle("use glint in bright eye", "B_BRIGHT_GLINT", true);
 	
 
-	
 	if(IM.mode == INPUT_LIVE_VIDEO && IM.grabberType == INPUT_OFXLIBDC) {
 		ofxLibdcPtGrey& cam = *((ofxLibdcPtGrey*) IM.vidGrabber);
 		lastShutter = cam.getShutterNorm();
@@ -321,7 +344,7 @@ void trackingManager::updateGui(){
 			
 #ifdef TARGET_OSX
 			// since macs fuck up bad fullscreen with video settings
-			ofSetFullscreen(false);
+			//ofSetFullscreen(false);
 #endif
 			if(IM.grabberType == INPUT_OFVIDEOGRABBER) {
 				qtVideoGrabber& cam = *((qtVideoGrabber*) IM.vidGrabber);

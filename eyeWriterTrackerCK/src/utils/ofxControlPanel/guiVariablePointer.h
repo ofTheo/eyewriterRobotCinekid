@@ -11,6 +11,7 @@
 
 typedef enum{
 	GUI_VAR_NONE,
+	GUI_VAR_BOOL,
 	GUI_VAR_INT,
 	GUI_VAR_FLOAT,
 	GUI_VAR_STRING

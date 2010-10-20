@@ -52,6 +52,8 @@ class guiTypeVairableLister : public guiBaseObject{
 					vars[i].varAsString = ofToString( *((int *)vars[i].ptr));
 				}else if( vars[i].dataType == GUI_VAR_STRING ){
 					vars[i].varAsString = *((string *)vars[i].ptr);
+				}else if( vars[i].dataType == GUI_VAR_BOOL ){
+					vars[i].varAsString = ofToString( (int)(*((bool *)vars[i].ptr)));
 				}
 				
 				minVarWidth = MAX(minVarWidth, displayText.getTextWidth( "= " + vars[i].varAsString));

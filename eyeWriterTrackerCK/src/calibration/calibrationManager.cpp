@@ -6,7 +6,7 @@ void calibrationManager::setup(){
 	calibrationInfo.loadImage("images/calibrationInfo.png");
 	font.loadFont("fonts/HelveticaNeueMed.ttf", 32);
 
-	nDivisionsWidth		= 3;
+	nDivisionsWidth		= 4;
 	nDivisionsHeight	= 3;
 
 	nPosition = 0;
@@ -179,7 +179,7 @@ void calibrationManager::draw(){
 	if (!bPreAutomatic || !bAutomatic) panel.draw();
 
 	ofEnableAlphaBlending();
-	ofSetColor(30, 30, 30, (int) (255 - 255 *  menuEnergy));
+	ofSetColor(30, 30, 30, (int) (255 - 255.0 * menuEnergy));
 	ofRect(0,0,ofGetWidth(), ofGetHeight());
 
 //	ofSetColor(255, 255, 255, 40);
@@ -270,6 +270,7 @@ void calibrationManager::draw(){
 	}
 
 	if (bPreAutomatic == true){
+		ofSetColor(255, 255, 255);
 		calibrationInfo.draw(100,100);
 //		cout << bPreAutomatic << endl;
 	}

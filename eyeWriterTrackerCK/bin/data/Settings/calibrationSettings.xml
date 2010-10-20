@@ -8,7 +8,7 @@
     <val_0>0.562778</val_0>
 </PRE_RECORD_TIME>
 <RECORD_TIME>
-    <val_0>0.496667</val_0>
+    <val_0>0.761111</val_0>
 </RECORD_TIME>
 <START_AUTO>
     <val_0>0.000000</val_0>
@@ -29,7 +29,7 @@
     <val_0>0.000000</val_0>
 </LOAD_CALIB>
 <B_REMOVE_FAR_AVERAGE>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </B_REMOVE_FAR_AVERAGE>
 <THRESHOLD_DIST>
     <val_0>1.700000</val_0>
@@ -68,5 +68,5 @@
     <val_0>0.000000</val_0>
 </B_MOUSE_SIMULATION>
 <POST_TIME>
-    <val_0>0.197778</val_0>
+    <val_0>0.076389</val_0>
 </POST_TIME>
