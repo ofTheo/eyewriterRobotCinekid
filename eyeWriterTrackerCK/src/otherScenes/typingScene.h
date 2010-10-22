@@ -19,6 +19,8 @@
 #include "ofxXmlSettings.h"
 #include "baseScene.h"
 
+#include "ofxControlPanel.h"
+
 extern "C" {
 #include "speak.h"
 };
@@ -32,10 +34,13 @@ public:
 	void update(float mouseX, float mouseY);
 	void draw();
 	void printMessageHistory();
+	void sendToRobot();
 	
 	buttonTrigger	doneButton;
 	
 	bool bSpeakWords;
+	
+	int bCount;
 	
 	
 	vector <buttonTrigger> letterButtons;
@@ -52,6 +57,8 @@ public:
 	ofTrueTypeFont  franklinBookSmall;
 	ofTrueTypeFont	verdana;
 	ofTrueTypeFont  franklinBookLarge;
+	
+	ofxControlPanel panel;
 	bool shiftOn;
 	
 	float yadd2;

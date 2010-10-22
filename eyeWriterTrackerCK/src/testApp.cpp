@@ -192,6 +192,19 @@ void testApp::keyPressed(int key){
 	//'@' Push
 	//'#' Long Push
 	
+	if( key == ' ' && mode == MODE_TYPING ){
+		typeScene.sendToRobot();
+	}
+	
+	if( key == ' ' && mode == MODE_TRACKING ){
+		float thresh = TM.panel.getValueF("THRESHOLD_EYEPOS");
+		thresh += 15;
+		if( thresh >= 110 ){
+			thresh = 24;
+		}
+		TM.panel.setValueF("THRESHOLD_EYEPOS", thresh);
+	}
+	
 	if( key == '\\' && mode == MODE_DRAW){
 		eyeApp.drawScene.checkOffset();
 	}
@@ -269,6 +282,12 @@ void testApp::keyPressed(int key){
 			
 			
 	}
+
+	if (mode == MODE_TYPING){
+		if( key == 'D' ){
+			typeScene.panel.toggleView();
+		}
+	}
 	
 	if( mode == MODE_DRAW ){
 		eyeApp.keyPressed(key);
@@ -295,6 +314,7 @@ void testApp::mouseDragged(int x, int y, int button){
 	if (mode == MODE_TRACKING)			TM.mouseDragged(x, y, button);
 	if (mode == MODE_CALIBRATING)		CM.mouseDragged(x, y, button);
 	if (mode == MODE_DRAW)				eyeApp.mouseDragged(x, y, button);	
+	if (mode == MODE_TYPING )			typeScene.panel.mouseDragged(x, y, button);
 
 }
 
@@ -305,7 +325,7 @@ void testApp::mousePressed(int x, int y, int button){
 	if (mode == MODE_TRACKING)			TM.mousePressed(x, y, button);
 	if (mode == MODE_CALIBRATING)		CM.mousePressed(x, y, button);
 	if (mode == MODE_DRAW)				eyeApp.mousePressed(x, y, button);
-
+	if (mode == MODE_TYPING )			typeScene.panel.mousePressed(x, y, button);
 
 }
 
@@ -315,7 +335,7 @@ void testApp::mouseReleased(int x, int y, int button){
 	if (mode == MODE_TRACKING)			TM.mouseReleased();
 	if (mode == MODE_CALIBRATING)		CM.mouseReleased(x,y,button);
 	if (mode == MODE_DRAW)				eyeApp.mouseReleased(x, y, button);
-
+	if (mode == MODE_TYPING )			typeScene.panel.mouseReleased();
 }
 
 //--------------------------------------------------------------

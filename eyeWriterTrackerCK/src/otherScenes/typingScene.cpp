@@ -11,7 +11,9 @@
 #include "testApp.h"
 
 //switch to gui
-extern  int buttonCount; 
+
+buttonTrigger enterButton;
+
 
 //--------------------------------------------------------------
 void typingScene::setup(){
@@ -20,9 +22,17 @@ void typingScene::setup(){
 	
 	franklinBookSmall.loadFont("fonts/HelveticaNeueMed.ttf", 16);
 	carriageReturnCounter = 0;
-	//buttonCount=390;
+	//bCount=390;
 	ofBackground(255, 255, 255);
 	shiftOn = false;
+	
+	bCount = 56;
+	
+	panel.setup("type panel", ofGetWidth()-250, 10, 250, 400);
+	panel.addPanel("settings", 1, false);
+	panel.addSlider("buttonCount", "buttonCount", bCount, 10, 200, true);
+	panel.hide();
+	panel.loadSettings("Settings/typeSettings.xml");
 	
 	string buttons[26] = 
 	{ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 
@@ -30,7 +40,6 @@ void typingScene::setup(){
 		"T", "U", "V", "W", "X", "Y", "Z"
 	};
 	
-	int buttonCount = 28;
 	
 	bSpeakWords = false;
 	
@@ -39,25 +48,31 @@ void typingScene::setup(){
 	yadd2 = 130;
 	
 	float xStart  = 45;
-	float yStart  = 15;
+	float yStart  = 25;
 	float bWidth  = 100;
 	float bHeight = 100;
 	
 	for (int i = 0; i < 26; i++){
 		buttonTrigger nButton;
 		nButton.setup(buttons[i], xStart + xadd2, yStart + yadd2, bWidth, bHeight);
-		nButton.setMaxCounter(buttonCount);
+		nButton.setMaxCounter(bCount);
 		nButton.setRetrigger(false);
 		letterButtons.push_back(nButton);
 		
-		xStart += 120;
+		xStart += 140;
 		if (xStart > 900 ){
 			//if (xStart > 900){
 			xStart = 45;
-			yStart += 120;
+			yStart += 125;
 		}
 		
 	}
+	
+	buttonTrigger spaceButton;
+	spaceButton.setup("SPACE", xStart + xadd2, yStart + yadd2, bWidth*2 + 40, bHeight);
+	spaceButton.setMaxCounter(bCount);
+	spaceButton.setRetrigger(false);
+	letterButtons.push_back(spaceButton);	
 	
 	float xadd = 150;
 	float yadd = 250;
@@ -69,77 +84,72 @@ void typingScene::setup(){
 	
 //	buttonTrigger semiButton;
 //	semiButton.setup(":\n;", 825+xadd, 295+yadd, bWidth, bHeight);
-//	semiButton.setMaxCounter(buttonCount);
+//	semiButton.setMaxCounter(bCount);
 //	semiButton.setRetrigger(false);
 //	letterButtons.push_back(semiButton);
 //	
 //	buttonTrigger quoteButton;
 //	quoteButton.setup("\"\n'", 915+xadd, 295+yadd, bWidth, bHeight);
-//	quoteButton.setMaxCounter(buttonCount);
+//	quoteButton.setMaxCounter(bCount);
 //	quoteButton.setRetrigger(false);
 //	letterButtons.push_back(quoteButton);
 //	
 //	buttonTrigger commaButton;
 //	commaButton.setup("<\n,", 735+xadd, 385+yadd, bWidth, bHeight);
-//	commaButton.setMaxCounter(buttonCount);
+//	commaButton.setMaxCounter(bCount);
 //	commaButton.setRetrigger(false);
 //	letterButtons.push_back(commaButton);
 //	
 //	buttonTrigger periodButton;
 //	periodButton.setup(">\n.", 825+xadd, 385+yadd, bWidth, bHeight);
-//	periodButton.setMaxCounter(buttonCount);
+//	periodButton.setMaxCounter(bCount);
 //	periodButton.setRetrigger(false);
 //	letterButtons.push_back(periodButton);
 //	
 //	buttonTrigger questionButton;
 //	questionButton.setup("?\n/", 915+xadd, 385+yadd, bWidth, bHeight);
-//	questionButton.setMaxCounter(buttonCount);
+//	questionButton.setMaxCounter(bCount);
 //	questionButton.setRetrigger(false);
 //	letterButtons.push_back(questionButton);
 	
 	//buttonTrigger deleteButton;
 //	deleteButton.setup("ENTER", 735+xadd, 475+yadd, bWidth*2+15, bHeight);
-//	deleteButton.setMaxCounter(buttonCount);
+//	deleteButton.setMaxCounter(bCount);
 //	deleteButton.setRetrigger(true);
 //	letterButtons.push_back(deleteButton);
 	
 	float shiftX = 100;
-	float shiftY = -80;
+	float shiftY = -50;
 	
-	buttonTrigger enterButton;
-	enterButton.setup("DELETE", xadd + 400, 345+yadd+shiftY, bWidth*2+15, bHeight);
-	enterButton.setMaxCounter(buttonCount);
+	enterButton.setup("DELETE", ofGetWidth()-bWidth*2.5, 40, bWidth*2+15, bHeight);
+	enterButton.setMaxCounter(bCount);
 	enterButton.setRetrigger(true);
 	letterButtons.push_back(enterButton);
 	
 	buttonTrigger speakAllButton;
 	speakAllButton.setup("SEND TO ROBOT", 282+xadd - 230, 475+yadd+shiftY-10, bWidth*2+80, bHeight);
-	speakAllButton.setMaxCounter(buttonCount);
+	speakAllButton.setMaxCounter(bCount);
 	speakAllButton.setRetrigger(false);
 	letterButtons.push_back(speakAllButton);
 	
 	
 	buttonTrigger clearButton;
-	clearButton.setup("CLEAR ALL", xadd + 400, 475+yadd+shiftY-10, bWidth*2+15, bHeight);
-	clearButton.setMaxCounter(buttonCount);
+	clearButton.setup("CLEAR ALL", 45, 475+yadd+shiftY-10, bWidth*2+15 , bHeight);
+	clearButton.setMaxCounter(bCount);
 	clearButton.setRetrigger(false);
 	letterButtons.push_back(clearButton);
 	
-	buttonTrigger spaceButton;
-	spaceButton.setup("SPACE", xadd, 345+yadd+shiftY, bWidth*4.5+7, bHeight);
-	spaceButton.setMaxCounter(buttonCount);
-	spaceButton.setRetrigger(false);
-	letterButtons.push_back(spaceButton);
+	
 	
 //	buttonToggle capsButton;
 //	capsButton.setup("CAPS ON", "CAPS OFF", false, 800+xadd+100, 475+yadd, bWidth+15, bHeight);
-//	capsButton.setMaxCounter(buttonCount);
+//	capsButton.setMaxCounter(bCount);
 //	actionButtons.push_back(capsButton);
 //	
 //	
 //	buttonToggle speakButton;
 //	speakButton.setup("SPEAK\nWORDS\nON", "SPEAK\nWORDS\nOFF", false, 800+xadd+100, 175+yadd, bWidth+15, bHeight);
-//	speakButton.setMaxCounter(buttonCount);
+//	speakButton.setMaxCounter(bCount);
 //	actionButtons.push_back(speakButton);
 	
 	
@@ -193,15 +203,30 @@ void typingScene::setup(){
 	
 	
 }
+
+void typingScene::sendToRobot(){
+	if (displayMessage.size() > 0){
+		//speakMe(displayMessage.c_str());
+		testApp * tApp = (testApp*)ofGetAppPtr();
+		tApp->eyeApp.drawScene.loadStringToRobot(displayMessage);
+		tApp->mode = MODE_DRAW;
+		displayMessage.clear();
+		carriageReturnCounter = 0;
+	}	
+}
+
 //--------------------------------------------------------------
 void typingScene::update(float mouseX, float mouseY){
 	mx = mouseX;
 	my = mouseY;
 	
+	panel.update();
+	bCount = panel.getValueI("buttonCount");
+	
 	//ofSetFrameRate(100);
 	
 	for(int i = 0; i < letterButtons.size(); i++) {
-		letterButtons[i].setMaxCounter(buttonCount);
+		letterButtons[i].setMaxCounter(bCount);
 		if(letterButtons[i].update(mx, my)) {
 			if ((carriageReturnCounter == 32)|(carriageReturnCounter == 31)) {
 				//displayMessage.push_back("\n");
@@ -325,7 +350,7 @@ void typingScene::update(float mouseX, float mouseY){
 	}
 	
 	for (int i = 0; i < actionButtons.size(); i++){
-		actionButtons[i].setMaxCounter(buttonCount);
+		actionButtons[i].setMaxCounter(bCount);
 		if(actionButtons[i].update(mx, my)) {
 			if (actionButtons[i].displayText[1] == "CAPS ON"){
 				if (shiftOn) shiftOn = false;
@@ -349,20 +374,20 @@ void typingScene::update(float mouseX, float mouseY){
 //		displayMessage += message[i];
 //	}
 	
+	enterButton.setMaxCounter((float)bCount * 0.65);
+
+	
 }	
 
 //--------------------------------------------------------------
 void typingScene::draw(){
+	
+	
 	ofPushStyle();	
 	
 	//bool bGrid = showGrid.getState();
 	
-	for(int i = 0; i < letterButtons.size(); i++){
-		letterButtons[i].draw();
-	}
-	for(int i = 0; i < actionButtons.size(); i++){
-		actionButtons[i].draw();
-	}
+
 	
 	//float textWidth = 8.0f * displayMessage.length();
 	//float remainX = (width - textWidth)/2;
@@ -409,6 +434,15 @@ void typingScene::draw(){
 	ofRect(xx, yy, 10,3);
 	
 	ofPopStyle();
+	
+	for(int i = 0; i < letterButtons.size(); i++){
+		letterButtons[i].draw();
+	}
+	for(int i = 0; i < actionButtons.size(); i++){
+		actionButtons[i].draw();
+	}
+	
+	panel.draw();
 	
 	//drawCursor();
 }

@@ -18,7 +18,6 @@ void pongScene::setup(){
 	ballPoint.set(20,20);
 	
 	ballVelocity.set(ofRandom(-5,5), ofRandom(2,9));
-	ballVelocity *= 1.9;
 	
 	fasterButton.setup("FASTER", 700,100,100,100);
 	fasterButton.setMaxCounter(30);
@@ -77,7 +76,6 @@ void pongScene::update(float mouseX, float mouseY){
 		ballPoint.x = ofRandom(0,ofGetWidth());
 		ballPoint.y = 20;
 		ballVelocity.set(ofRandom(-5,5), ofRandom(2,9));
-		ballVelocity *= 1.9;
 		
 	}
 	
