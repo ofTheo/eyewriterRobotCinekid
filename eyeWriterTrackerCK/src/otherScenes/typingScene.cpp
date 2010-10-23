@@ -47,9 +47,12 @@ void typingScene::setup(){
 	
 	yadd2 = 130;
 	
-	float xStart  = 45;
+	float sx = 20;
+	float spacingX = 35;
+	
+	float xStart  = sx;
 	float yStart  = 25;
-	float bWidth  = 100;
+	float bWidth  = 110;
 	float bHeight = 100;
 	
 	for (int i = 0; i < 26; i++){
@@ -59,17 +62,17 @@ void typingScene::setup(){
 		nButton.setRetrigger(false);
 		letterButtons.push_back(nButton);
 		
-		xStart += 140;
-		if (xStart > 900 ){
+		xStart += spacingX+bWidth;
+		if (xStart > 1024-(bWidth+spacingX*0.5) ){
 			//if (xStart > 900){
-			xStart = 45;
+			xStart = sx;
 			yStart += 125;
 		}
 		
 	}
 	
 	buttonTrigger spaceButton;
-	spaceButton.setup("SPACE", xStart + xadd2, yStart + yadd2, bWidth*2 + 40, bHeight);
+	spaceButton.setup("SPACE", xStart + xadd2, yStart + yadd2, bWidth*2 + 35, bHeight);
 	spaceButton.setMaxCounter(bCount);
 	spaceButton.setRetrigger(false);
 	letterButtons.push_back(spaceButton);	
@@ -121,20 +124,20 @@ void typingScene::setup(){
 	float shiftX = 100;
 	float shiftY = -50;
 	
-	enterButton.setup("DELETE", ofGetWidth()-bWidth*2.5, 40, bWidth*2+15, bHeight);
+	enterButton.setup("DELETE", ofGetWidth()-bWidth*2.5, 18, bWidth*2+15, bHeight+22);
 	enterButton.setMaxCounter(bCount);
 	enterButton.setRetrigger(true);
 	letterButtons.push_back(enterButton);
 	
 	buttonTrigger speakAllButton;
-	speakAllButton.setup("SEND TO ROBOT", 282+xadd - 230, 475+yadd+shiftY-10, bWidth*2+80, bHeight);
+	speakAllButton.setup("SEND TO ROBOT", 282+xadd - 230, 475+yadd+shiftY-10, bWidth*2+98, bHeight+9);
 	speakAllButton.setMaxCounter(bCount);
 	speakAllButton.setRetrigger(false);
 	letterButtons.push_back(speakAllButton);
 	
 	
 	buttonTrigger clearButton;
-	clearButton.setup("CLEAR ALL", 45, 475+yadd+shiftY-10, bWidth*2+15 , bHeight);
+	clearButton.setup("CLEAR ALL", (ofGetWidth()-bWidth*2.5) - 25, 475+yadd+shiftY-18, bWidth*2+39 , bHeight+10);
 	clearButton.setMaxCounter(bCount);
 	clearButton.setRetrigger(false);
 	letterButtons.push_back(clearButton);
