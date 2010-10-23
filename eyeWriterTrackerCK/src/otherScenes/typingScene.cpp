@@ -47,12 +47,12 @@ void typingScene::setup(){
 	
 	yadd2 = 130;
 	
-	float sx = 20;
-	float spacingX = 35;
+	float sx = 15;
+	float spacingX = 25;
 	
 	float xStart  = sx;
 	float yStart  = 25;
-	float bWidth  = 110;
+	float bWidth  = 120;
 	float bHeight = 100;
 	
 	for (int i = 0; i < 26; i++){
@@ -63,7 +63,7 @@ void typingScene::setup(){
 		letterButtons.push_back(nButton);
 		
 		xStart += spacingX+bWidth;
-		if (xStart > 1024-(bWidth+spacingX*0.5) ){
+		if (xStart > 1024-(bWidth+sx) ){
 			//if (xStart > 900){
 			xStart = sx;
 			yStart += 125;
@@ -72,7 +72,7 @@ void typingScene::setup(){
 	}
 	
 	buttonTrigger spaceButton;
-	spaceButton.setup("SPACE", xStart + xadd2, yStart + yadd2, bWidth*2 + 35, bHeight);
+	spaceButton.setup("SPACE", xStart + xadd2, yStart + yadd2, bWidth*2 + 25, bHeight);
 	spaceButton.setMaxCounter(bCount);
 	spaceButton.setRetrigger(false);
 	letterButtons.push_back(spaceButton);	
@@ -124,7 +124,7 @@ void typingScene::setup(){
 	float shiftX = 100;
 	float shiftY = -50;
 	
-	enterButton.setup("DELETE", ofGetWidth()-bWidth*2.5, 18, bWidth*2+15, bHeight+22);
+	enterButton.setup("DELETE", ofGetWidth()-bWidth*2.5, 5, bWidth*2+15, bHeight+32);
 	enterButton.setMaxCounter(bCount);
 	enterButton.setRetrigger(true);
 	letterButtons.push_back(enterButton);

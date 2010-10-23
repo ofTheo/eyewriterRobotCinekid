@@ -118,8 +118,9 @@ void testApp::update(){
 	}
 	
 	if (mode == MODE_TYPING){
-		ofHideCursor();
-
+		if(typeScene.panel.hidden) ofHideCursor();
+		else ofShowCursor();
+		
 		ofPoint pt = eyeSmoothed;
 		typeScene.update(pt.x, pt.y);
 	}
